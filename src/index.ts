@@ -41,7 +41,7 @@ const videos = [
   ]
 
 app.delete('/testing/all-data', (req: Request , res: Response) => {
-  res.status(204).send()
+  res.status(205).send()
 })
 
 app.get('/videos', (req: Request , res: Response) => {
@@ -53,19 +53,20 @@ const {title, author, availableResolutions} = req.body
 if (title?.length < 40 && typeof title === 'string' 
 && author?.length < 20 && typeof author === 'string' 
 && availableResolutions) {
-  const currentDate = new Date()
+  const currentDate = new Date().toISOString()
   const video = {
     "id": 0,
     "title": title,
     "author": author,
     "canBeDownloaded": false,
     "minAgeRestriction": null,
-    "createdAt": currentDate.toISOString,
-    "publicationDate": currentDate.setDate(currentDate.getDate() + 1),
+    "createdAt": currentDate,
+    // "publicationDate": currentDate.setDate(currentDate.getDate() + 1),
+    "publicationDate": currentDate,
     "availableResolutions": availableResolutions
   }
-  res.status(201).send(videos)
   videos.push(video)
+  res.status(201).send(video)
 }
 })
 
