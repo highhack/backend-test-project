@@ -2,6 +2,17 @@ import  express, {Request, Response}  from 'express'
 const app = express()
 const port = process.env.PORT || 3002
 
+enum AvailableResolutions  {
+   P144 = 'P144', 
+   P240 = 'P240', 
+   P360 = 'P360', 
+   P480 = 'P480', 
+   P720 = 'P720', 
+   P1080 = 'P1080', 
+   P1440 = 'P1440', 
+   P2160 = 'P2160' 
+}
+
 const videos = [
     {
       "id": 1,
@@ -39,8 +50,22 @@ app.get('/videos', (req: Request , res: Response) => {
 
 app.post('/videos', (req: Request , res: Response) => {
 const {title, author, availableResolutions} = req.body 
-if (title?.length < 40 && typeof title === 'string') {
-  
+if (title?.length < 40 && typeof title === 'string' 
+&& author?.length < 20 && typeof author === 'string' 
+&& availableResolutions) {
+  const currentDate = new Date()
+  const video = {
+    "id": 0,
+    "title": title,
+    "author": author,
+    "canBeDownloaded": false,
+    "minAgeRestriction": null,
+    "createdAt": currentDate.toISOString,
+    "publicationDate": currentDate.setDate(currentDate.getDate() + 1),
+    "availableResolutions": availableResolutions
+  }
+  res.status(201).send(videos)
+  videos.push(video)
 }
 })
 
