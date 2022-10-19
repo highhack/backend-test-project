@@ -41,7 +41,7 @@ const videos = [
   ]
 
 app.delete('/testing/all-data', (req: Request , res: Response) => {
-  res.status(205).send()
+  res.status(204).send()
 })
 
 app.get('/videos', (req: Request , res: Response) => {
