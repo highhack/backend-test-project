@@ -27,7 +27,7 @@ const videos = [
       ]
     },
     {
-      "id": '1',
+      "id": '2',
       "title": "string",
       "author": "german2",
       "canBeDownloaded": false,
@@ -59,7 +59,7 @@ if (title?.length < 40 && typeof title === 'string'
 && availableResolutions) {
   const currentDate = new Date().toISOString()
   const video = {
-    "id": 0,
+    "id": '3',
     "title": title,
     "author": author,
     "canBeDownloaded": false,
@@ -76,14 +76,14 @@ if (title?.length < 40 && typeof title === 'string'
 app.get('/videos/:videoId', (req: Request , res: Response) => {
   let videoId = +req.body.videoId
   console.log(videoId)
-  let video = videos.find(v => v.id === videoId)
+  let video = videos.find(v => v.id === videoId.toString())
   if (video) res.status(200).send(video)
   else res.status(404).send()
 })
 
 app.put('/videos/:videoId', (req: Request , res: Response) => {
   let videoId = +req.body.videoId
-  let video = videos.find(v => v.id === videoId)
+  let video = videos.find(v => v.id === videoId.toString())
   let title = req.body.title
   if (video && typeof title === 'string') {
     video.title = title
@@ -103,7 +103,7 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
 
 app.delete('/videos/:videoId', (req: Request , res: Response) => {
   let videoId = +req.body.videoId
-  let video = videos.find(v => v.id === videoId)
+  let video = videos.find(v => v.id === videoId.toString())
 
 })
 
