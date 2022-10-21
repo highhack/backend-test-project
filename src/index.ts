@@ -15,7 +15,7 @@ enum AvailableResolutions  {
 
 const videos = [
     {
-      "id": 1,
+      "id": '1',
       "title": "string",
       "author": "german1",
       "canBeDownloaded": true,
@@ -27,7 +27,7 @@ const videos = [
       ]
     },
     {
-      "id": 2,
+      "id": '1',
       "title": "string",
       "author": "german2",
       "canBeDownloaded": false,
@@ -65,7 +65,6 @@ if (title?.length < 40 && typeof title === 'string'
     "canBeDownloaded": false,
     "minAgeRestriction": null,
     "createdAt": currentDate,
-    // "publicationDate": currentDate.setDate(currentDate.getDate() + 1),
     "publicationDate": currentDate,
     "availableResolutions": availableResolutions
   }
@@ -76,9 +75,10 @@ if (title?.length < 40 && typeof title === 'string'
 
 app.get('/videos/:videoId', (req: Request , res: Response) => {
   let videoId = +req.body.videoId
+  console.log(videoId)
   let video = videos.find(v => v.id === videoId)
   if (video) res.status(200).send(video)
-  else res.status(400).send()
+  else res.status(404).send()
 })
 
 app.put('/videos/:videoId', (req: Request , res: Response) => {
