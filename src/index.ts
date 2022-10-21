@@ -44,6 +44,10 @@ app.delete('/testing/all-data', (req: Request , res: Response) => {
   res.status(204).send()
 })
 
+app.get('/', (req: Request , res: Response) => {
+  res.status(200).send('videos!!!')
+})
+
 app.get('/videos', (req: Request , res: Response) => {
   res.status(200).send(videos)
 })
