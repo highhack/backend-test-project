@@ -53,6 +53,7 @@ app.get('/videos', (req: Request , res: Response) => {
 })
 
 app.post('/videos', (req: Request , res: Response) => {
+  console.log("POST")
 const {title, author, availableResolutions} = req.body 
 if (title?.length < 40 && typeof title === 'string' 
 && author?.length < 20 && typeof author === 'string' 
