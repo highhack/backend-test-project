@@ -53,11 +53,10 @@ app.get('/videos', (req: Request , res: Response) => {
 })
 
 app.post('/videos', (req: Request , res: Response) => {
-  console.log("POST")
 const {title, author, availableResolutions} = req.body 
-if (title?.length < 40 && typeof title === 'string' 
-&& author?.length < 20 && typeof author === 'string' 
-&& availableResolutions) {
+// if (title?.length < 40 && typeof title === 'string' 
+// && author?.length < 20 && typeof author === 'string' 
+// && availableResolutions) {
   console.log("POST")
   const currentDate = new Date().toISOString()
   const video = {
@@ -72,7 +71,7 @@ if (title?.length < 40 && typeof title === 'string'
   }
   videos.push(video)
   res.status(201).send(video)
-}
+// }
 })
 
 app.get('/videos/:videoId', (req: Request , res: Response) => {
