@@ -57,6 +57,7 @@ const {title, author, availableResolutions} = req.body
 if (title?.length < 40 && typeof title === 'string' 
 && author?.length < 20 && typeof author === 'string' 
 && availableResolutions) {
+  console.log("POST")
   const currentDate = new Date().toISOString()
   const video = {
     "id": 3,
