@@ -45,10 +45,10 @@ app.post('/videos', (req: Request , res: Response) => {
 const {title, author, availableResolutions} = req.body 
 if (title?.length < 40 && typeof title === 'string' 
 && author?.length < 20 && typeof author === 'string' ) {
-  // const date = new Date()
-  const currentDate = new Date().toISOString()
-  // date.setDate(new Date().getDate() + 1)
-  const  tommorowDate = new Date().toISOString()
+  const date = new Date()
+  const currentDate = date.toISOString()
+  date.setDate(date.getDate() + 1)
+  const  tommorowDate = date.toISOString()
   const video = {
     "id": 3,
     "title": title,
@@ -106,13 +106,13 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
      res.status(204).send()
   }
   else res.status(400).send({
-    "errorsMessages": [
-      {
-        "message": "string",
-        "field": "string"
-      }
-    ]
-  })
+  "errorsMessages": [
+    {
+      "message": "string",
+      "field": "string"
+    }
+  ]
+})
  }
   else res.status(404).send()
   })
