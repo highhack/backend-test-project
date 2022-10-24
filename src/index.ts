@@ -135,9 +135,9 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
       "message": "string",
       "field": "minAgeRestriction"
     })
-    if (!publicationDate  || isIsoDate(publicationDate)) errors.push({
+    if (!publicationDate  || !isIsoDate(publicationDate)) errors.push({
       "message": "string",
-      "field": "minAgeRestriction"
+      "field": "publicationDate"
     })
     res.status(400).send({
   "errorsMessages": errors
