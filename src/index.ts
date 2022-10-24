@@ -46,17 +46,18 @@ const {title, author, availableResolutions} = req.body
 if (title?.length < 40 && typeof title === 'string' 
 && author?.length < 20 && typeof author === 'string' ) {
   const date = new Date()
-  const currentDate = date.toISOString()
-  date.setDate(date.getDate() + 1)
-  const  tommorowDate = date.toISOString()
+  const tomorow = new Date()
+  // const currentDate = date.toISOString()
+  tomorow.setDate(date.getDate() + 1)
+  // const  tommorowDate = date.toISOString()
   const video = {
     "id": 3,
     "title": title,
     "author": author,
     "canBeDownloaded": false,
     "minAgeRestriction": null,
-    "createdAt": currentDate,
-    "publicationDate": tommorowDate,
+    "createdAt": date.toISOString(),
+    "publicationDate": tomorow.toISOString(),
     "availableResolutions": availableResolutions
   }
   videos.push(video)
