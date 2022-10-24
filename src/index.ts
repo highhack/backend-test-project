@@ -52,12 +52,12 @@ if (title?.length < 40 && typeof title === 'string'
   tomorow.setDate(date.getDate() + 1)
   // const  tommorowDate = date.toISOString()
   const video = {
-    "id": 3,
+    "id": new Date().getTime(),
     "title": title,
     "author": author,
     "canBeDownloaded": false,
     "minAgeRestriction": null,
-    "createdAt": date.toISOString(),
+    "createdAt": new Date().toISOString(),
     "publicationDate": tomorow.toISOString(),
     "availableResolutions": availableResolutions
   }
