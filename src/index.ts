@@ -45,10 +45,10 @@ app.post('/videos', (req: Request , res: Response) => {
 const {title, author, availableResolutions} = req.body 
 if (title?.length < 40 && typeof title === 'string' 
 && author?.length < 20 && typeof author === 'string' ) {
-  const date = new Date()
-  const currentDate = date.toISOString()
-  date.setDate(date.getDate() + 1)
-  const  tommorowDate = date.toISOString()
+  // const date = new Date()
+  const currentDate = new Date().toISOString()
+  // date.setDate(new Date().getDate() + 1)
+  const  tommorowDate = new Date().toISOString()
   const video = {
     "id": 3,
     "title": title,
