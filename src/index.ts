@@ -1,8 +1,18 @@
 import  express, {Request, Response}  from 'express'
 import bodyParser from 'body-parser'
 
+interface Video { 
+  id: number; 
+  title: string; 
+  author: string; 
+  canBeDownloaded: boolean; 
+  minAgeRestriction: null; 
+  createdAt: string; 
+  publicationDate: string; 
+  availableResolutions: any }
 const app = express()
 const port = process.env.PORT || 3002
+
 
 enum AvailableResolutions  {
    P144 = 'P144', 
@@ -15,32 +25,7 @@ enum AvailableResolutions  {
    P2160 = 'P2160' 
 }
 
-const videos: { id: number; title: string; author: string; canBeDownloaded: boolean; minAgeRestriction: null; createdAt: string; publicationDate: string; availableResolutions: any }[] = [
-    // {
-    //   "id": 1,
-    //   "title": "string",
-    //   "author": "german1",
-    //   "canBeDownloaded": true,
-    //   "minAgeRestriction": null,
-    //   "createdAt": "2022-10-17T16:15:24.839Z",
-    //   "publicationDate": "2022-10-17T16:15:24.839Z",
-    //   "availableResolutions": [
-    //     "P144"
-    //   ]
-    // },
-    // {
-    //   "id": 2,
-    //   "title": "string",
-    //   "author": "german2",
-    //   "canBeDownloaded": false,
-    //   "minAgeRestriction": null,
-    //   "createdAt": "2022-10-17T16:15:24.839Z",
-    //   "publicationDate": "2022-10-17T16:15:24.839Z",
-    //   "availableResolutions": [
-    //     "P144"
-    //   ]
-    // },
-  ]
+const videos: Video[] = []
 
   app.use(bodyParser({}))
 
@@ -58,10 +43,10 @@ app.get('/videos', (req: Request , res: Response) => {
 
 app.post('/videos', (req: Request , res: Response) => {
 const {title, author, availableResolutions} = req.body 
-console.log('TTT', req);
 if (title?.length < 40 && typeof title === 'string' 
 && author?.length < 20 && typeof author === 'string' ) {
   const currentDate = new Date().toISOString()
+  const  tommotowDate = new Date(Date.now() + ( 3600 * 1000 * 24)).toISOString()
   const video = {
     "id": 3,
     "title": title,
@@ -69,7 +54,7 @@ if (title?.length < 40 && typeof title === 'string'
     "canBeDownloaded": false,
     "minAgeRestriction": null,
     "createdAt": currentDate,
-    "publicationDate": currentDate,
+    "publicationDate": tommotowDate,
     "availableResolutions": availableResolutions
   }
   videos.push(video)
