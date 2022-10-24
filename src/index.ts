@@ -15,7 +15,7 @@ enum AvailableResolutions  {
    P2160 = 'P2160' 
 }
 
-const videos = [
+const videos: { id: number; title: string; author: string; canBeDownloaded: boolean; minAgeRestriction: null; createdAt: string; publicationDate: string; availableResolutions: any }[] = [
     // {
     //   "id": 1,
     //   "title": "string",
