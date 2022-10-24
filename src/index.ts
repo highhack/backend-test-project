@@ -25,11 +25,12 @@ enum AvailableResolutions  {
    P2160 = 'P2160' 
 }
 
-const videos: Video[] = []
+let videos: Video[] = []
 
   app.use(bodyParser({}))
 
 app.delete('/testing/all-data', (req: Request , res: Response) => {
+  videos = []
   res.status(204).send()
 })
 
@@ -120,9 +121,11 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
 
 
 app.delete('/videos/:videoId', (req: Request , res: Response) => {
-  let videoId = +req.params.videoId
-  let video = videos.find(v => v.id === videoId)
-
+  const videoId = +req.params.videoId
+  const video = videos.find(v => v.id === videoId)
+const videoIndex = video && videos.indexOf(video)
+videos.slice(videoIndex, 1)
+console.log(videos)
 })
 
 app.listen(port, () => {
