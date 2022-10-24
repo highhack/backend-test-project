@@ -27,7 +27,7 @@ enum AvailableResolutions  {
 
 let videos: Video[] = []
 
-const  availableResolutions = ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160' ]
+const  availableResolutionsArray = ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160' ]
 
 
   app.use(bodyParser({}))
@@ -94,7 +94,7 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
   if (video && videoId) {
     if (title?.length <= 40 && typeof title === 'string' &&
      author?.length <= 20 && typeof author === 'string' && 
-     Object.values(AvailableResolutions).includes(availableResolutions) && 
+     Object.values(AvailableResolutions).some( ai => availableResolutions.includes(ai)) && 
      canBeDownloaded && typeof canBeDownloaded === 'boolean' &&  minAgeRestriction && publicationDate) {
      video.title = title
      video.author = author
