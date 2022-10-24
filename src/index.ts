@@ -47,6 +47,7 @@ app.get('/videos', (req: Request , res: Response) => {
 
 app.post('/videos', (req: Request , res: Response) => {
 const {title, author, availableResolutions} = req.body 
+console.log('POST', Object.values(AvailableResolutions).some( ai => availableResolutions.includes(ai)) );
 if (title?.length <= 40 && typeof title === 'string' 
 && author?.length <= 20 && typeof author === 'string'
 && Object.values(AvailableResolutions).some( ai => availableResolutions.includes(ai)) ) {
