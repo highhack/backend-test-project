@@ -121,11 +121,18 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
 
 
 app.delete('/videos/:videoId', (req: Request , res: Response) => {
-  const videoId = +req.params.videoId
-  const video = videos.find(v => v.id === videoId)
+const videoId = +req.params.videoId
+const video = videos.find(v => v.id === videoId)
+if (video) {
 const videoIndex = video && videos.indexOf(video)
-videos.slice(videoIndex, 1)
-console.log(videos)
+console.log('videoId', videoId, 'video',video ,'videoIndex',videoIndex );
+ videos.splice(videoIndex, 1)
+  res.status(204).send()
+  console.log(videos)
+}
+else res.status(404).send()
+// videos = (videoIndex && videos.splice(videoIndex, 1)) || []
+// console.log(videos)
 })
 
 app.listen(port, () => {
