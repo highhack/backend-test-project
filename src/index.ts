@@ -29,6 +29,12 @@ let videos: Video[] = []
 
 const  availableResolutionsArray = ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160' ]
 
+function isIsoDate(str: string ) {
+  if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(str)) return false;
+  const d = new Date(str); 
+  return d instanceof Date &&  d.toISOString()===str; // valid date 
+}
+
 
   app.use(bodyParser({}))
 
@@ -101,6 +107,7 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
     if (title?.length <= 40 && typeof title === 'string' &&
      author?.length <= 20 && typeof author === 'string' && 
      minAgeRestriction  && minAgeRestriction <= 18 &&
+     publicationDate && isIsoDate(publicationDate) &&
      canBeDownloaded && typeof canBeDownloaded === 'boolean' &&  minAgeRestriction && publicationDate) {
      video.title = title
      video.author = author
@@ -125,6 +132,10 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
       "field": "canBeDownloaded"
     })
     if (!minAgeRestriction  || minAgeRestriction > 18) errors.push({
+      "message": "string",
+      "field": "minAgeRestriction"
+    })
+    if (!publicationDate  || isIsoDate(publicationDate)) errors.push({
       "message": "string",
       "field": "minAgeRestriction"
     })
