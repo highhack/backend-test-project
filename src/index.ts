@@ -64,11 +64,11 @@ if (title?.length < 40 && typeof title === 'string'
 }
 else {
   const errors = []
-  if (!title || typeof title !== 'string') errors.push({
+  if (!title || title?.length > 40 || typeof title !== 'string') errors.push({
     "message": "string",
     "field": "title"
   })
-  if (!author|| typeof author !== 'string' ) errors.push({
+  if (!author|| author.length > 20 || typeof author !== 'string' ) errors.push({
     "message": "string",
     "field": "author"
   })
@@ -103,11 +103,11 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
   }
   else {
     const errors = []
-    if (!title || typeof title !== 'string') errors.push({
+    if (!title ||  title?.length > 40 || typeof title !== 'string') errors.push({
       "message": "string",
       "field": "title"
     })
-    if (!author || typeof author !== 'string' ) errors.push({
+    if (!author ||  author?.length > 20 || typeof author !== 'string' ) errors.push({
       "message": "string",
       "field": "author"
     })
