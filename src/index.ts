@@ -44,8 +44,8 @@ app.get('/videos', (req: Request , res: Response) => {
 
 app.post('/videos', (req: Request , res: Response) => {
 const {title, author, availableResolutions} = req.body 
-if (title?.length < 40 && typeof title === 'string' 
-&& author?.length < 20 && typeof author === 'string' ) {
+if (title?.length <= 40 && typeof title === 'string' 
+&& author?.length <= 20 && typeof author === 'string' ) {
   const date = new Date()
   const tomorow = new Date()
   tomorow.setDate(date.getDate() + 1)
@@ -89,9 +89,9 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
   const videoId = +req.params.videoId
   const video = videos.find(v => v.id === videoId)
   if (video && videoId) {
-    if (title?.length < 40 && typeof title === 'string' &&
-     author?.length < 20 && typeof author === 'string' && 
-     availableResolutions && 
+    if (title?.length <= 40 && typeof title === 'string' &&
+     author?.length <= 20 && typeof author === 'string' && 
+     availableResolutions && availableResolutions === AvailableResolutions  && 
      canBeDownloaded && typeof canBeDownloaded === 'boolean' &&  minAgeRestriction && publicationDate) {
      video.title = title
      video.author = author
