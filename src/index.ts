@@ -48,7 +48,8 @@ app.get('/videos', (req: Request , res: Response) => {
 app.post('/videos', (req: Request , res: Response) => {
 const {title, author, availableResolutions} = req.body 
 if (title?.length <= 40 && typeof title === 'string' 
-&& author?.length <= 20 && typeof author === 'string' ) {
+&& author?.length <= 20 && typeof author === 'string'
+&& Object.values(AvailableResolutions).some( ai => availableResolutions.includes(ai)) ) {
   const date = new Date()
   const tomorow = new Date()
   tomorow.setDate(date.getDate() + 1)
@@ -75,6 +76,10 @@ else {
     "message": "string",
     "field": "author"
   })
+  if (!Object.values(AvailableResolutions).some( ai => availableResolutions.includes(ai))) errors.push({
+    "message": "string",
+    "field": "availableResolutions"
+  })
   res.status(400).send({
   "errorsMessages": errors
 })}
@@ -91,6 +96,7 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
   const {title, author, availableResolutions, canBeDownloaded, minAgeRestriction, publicationDate} = req.body 
   const videoId = +req.params.videoId
   const video = videos.find(v => v.id === videoId)
+  console.log('III', Object.values(AvailableResolutions).some( ai => availableResolutions.includes(ai)));
   if (video && videoId) {
     if (title?.length <= 40 && typeof title === 'string' &&
      author?.length <= 20 && typeof author === 'string' && 
