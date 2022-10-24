@@ -77,7 +77,7 @@ else {
     "message": "string",
     "field": "author"
   })
-  if (Object.values(AvailableResolutions).some( ai => availableResolutions.includes(ai))) errors.push({
+  if (availableResolutionsArray.some( ai => availableResolutions.includes(ai))) errors.push({
     "message": "string",
     "field": "availableResolutions"
   })
@@ -97,11 +97,10 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
   const {title, author, availableResolutions, canBeDownloaded, minAgeRestriction, publicationDate} = req.body 
   const videoId = +req.params.videoId
   const video = videos.find(v => v.id === videoId)
-  console.log('III', Object.values(AvailableResolutions).some( ai => availableResolutions.includes(ai)));
   if (video && videoId) {
     if (title?.length <= 40 && typeof title === 'string' &&
      author?.length <= 20 && typeof author === 'string' && 
-     !Object.values(AvailableResolutions).some( ai => availableResolutions.includes(ai)) && 
+    //  !availableResolutionsArray.some( ai => availableResolutions.includes(ai)) && 
      canBeDownloaded && typeof canBeDownloaded === 'boolean' &&  minAgeRestriction && publicationDate) {
      video.title = title
      video.author = author
