@@ -64,11 +64,11 @@ if (title?.length < 40 && typeof title === 'string'
 }
 else {
   const errors = []
-  if (title?.length < 40 && typeof title === 'string') errors.push({
+  if (title?.length > 40 || typeof title !== 'string') errors.push({
     "message": "string",
     "field": "title"
   })
-  if (author?.length < 20 && typeof author === 'string' ) errors.push({
+  if (author?.length > 20 || typeof author !== 'string' ) errors.push({
     "message": "string",
     "field": "author"
   })
@@ -103,15 +103,15 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
   }
   else {
     const errors = []
-    if (title?.length < 40 && typeof title === 'string') errors.push({
+    if (title?.length > 40 || typeof title !== 'string') errors.push({
       "message": "string",
       "field": "title"
     })
-    if (author?.length < 20 && typeof author === 'string' ) errors.push({
+    if (author?.length > 20 || typeof author !== 'string' ) errors.push({
       "message": "string",
       "field": "author"
     })
-    if (canBeDownloaded && typeof canBeDownloaded === 'boolean' ) errors.push({
+    if (!canBeDownloaded || typeof canBeDownloaded !== 'boolean' ) errors.push({
       "message": "string",
       "field": "canBeDownloaded"
     })
