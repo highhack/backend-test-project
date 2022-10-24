@@ -47,10 +47,10 @@ app.get('/videos', (req: Request , res: Response) => {
 
 app.post('/videos', (req: Request , res: Response) => {
 const {title, author, availableResolutions} = req.body 
-console.log('POST', Object.values(AvailableResolutions).some( ai => availableResolutions.includes(ai)) );
+console.log('POST', !availableResolutionsArray.some( ai => availableResolutions.includes(ai)) );
 if (title?.length <= 40 && typeof title === 'string' 
 && author?.length <= 20 && typeof author === 'string'
-&& Object.values(AvailableResolutions).some( ai => availableResolutions.includes(ai)) ) {
+&& !availableResolutionsArray.some( ai => availableResolutions.includes(ai)) ) {
   const date = new Date()
   const tomorow = new Date()
   tomorow.setDate(date.getDate() + 1)
@@ -77,7 +77,7 @@ else {
     "message": "string",
     "field": "author"
   })
-  if (!Object.values(AvailableResolutions).some( ai => availableResolutions.includes(ai))) errors.push({
+  if (Object.values(AvailableResolutions).some( ai => availableResolutions.includes(ai))) errors.push({
     "message": "string",
     "field": "availableResolutions"
   })
@@ -101,7 +101,7 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
   if (video && videoId) {
     if (title?.length <= 40 && typeof title === 'string' &&
      author?.length <= 20 && typeof author === 'string' && 
-     Object.values(AvailableResolutions).some( ai => availableResolutions.includes(ai)) && 
+     !Object.values(AvailableResolutions).some( ai => availableResolutions.includes(ai)) && 
      canBeDownloaded && typeof canBeDownloaded === 'boolean' &&  minAgeRestriction && publicationDate) {
      video.title = title
      video.author = author
