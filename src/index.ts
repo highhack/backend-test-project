@@ -100,7 +100,7 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
   if (video && videoId) {
     if (title?.length <= 40 && typeof title === 'string' &&
      author?.length <= 20 && typeof author === 'string' && 
-    //  !availableResolutionsArray.every( ai => availableResolutions.includes(ai)) && 
+     minAgeRestriction  && minAgeRestriction <= 18 &&
      canBeDownloaded && typeof canBeDownloaded === 'boolean' &&  minAgeRestriction && publicationDate) {
      video.title = title
      video.author = author
@@ -123,6 +123,10 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
     if (!canBeDownloaded || typeof canBeDownloaded !== 'boolean' ) errors.push({
       "message": "string",
       "field": "canBeDownloaded"
+    })
+    if (!minAgeRestriction  || minAgeRestriction > 18) errors.push({
+      "message": "string",
+      "field": "minAgeRestriction"
     })
     res.status(400).send({
   "errorsMessages": errors
