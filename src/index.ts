@@ -77,25 +77,15 @@ else res.status(400).send({
 app.get('/videos/:videoId', (req: Request , res: Response) => {
   const videoId = +req.params.videoId
   const video = videos.find(v => v.id === videoId)
-  if (video) res.send(video)
+  if (video && videoId) res.send(video)
   else res.status(404).send()
 })
 
 app.put('/videos/:videoId', (req: Request , res: Response) => {
   const {title, author, availableResolutions, canBeDownloaded, minAgeRestriction, publicationDate} = req.body 
   const videoId = +req.params.videoId
-  // const video = {
-  //   "id": 3,
-  //   "title": title,
-  //   "author": author,
-  //   "canBeDownloaded": canBeDownloaded,
-  //   "minAgeRestriction": minAgeRestriction,
-  //   "createdAt": currentDate,
-  //   "publicationDate": publicationDate,
-  //   "availableResolutions": availableResolutions
-  // }
   const video = videos.find(v => v.id === videoId)
-  if (video) {
+  if (video && videoId) {
     if (title?.length < 40 && typeof title === 'string' &&
      author?.length < 20 && typeof author === 'string' && 
      availableResolutions && canBeDownloaded &&  minAgeRestriction && publicationDate) {
@@ -123,7 +113,7 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
 app.delete('/videos/:videoId', (req: Request , res: Response) => {
 const videoId = +req.params.videoId
 const video = videos.find(v => v.id === videoId)
-if (video) {
+if (video && videoId) {
 const videoIndex = video && videos.indexOf(video)
 console.log('videoId', videoId, 'video',video ,'videoIndex',videoIndex );
  videos.splice(videoIndex, 1)
