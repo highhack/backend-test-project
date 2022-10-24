@@ -48,9 +48,7 @@ if (title?.length < 40 && typeof title === 'string'
 && author?.length < 20 && typeof author === 'string' ) {
   const date = new Date()
   const tomorow = new Date()
-  // const currentDate = date.toISOString()
   tomorow.setDate(date.getDate() + 1)
-  // const  tommorowDate = date.toISOString()
   const video = {
     "id": new Date().getTime(),
     "title": title,
@@ -64,14 +62,19 @@ if (title?.length < 40 && typeof title === 'string'
   videos.push(video)
   res.status(201).send(video)
 }
-else res.status(400).send({
-  "errorsMessages": [
-    {
-      "message": "string",
-      "field": "string"
-    }
-  ]
-})
+else {
+  const errors = []
+  if (title?.length < 40 && typeof title === 'string') errors.push({
+    "message": "string",
+    "field": "title"
+  })
+  if (author?.length < 20 && typeof author === 'string' ) errors.push({
+    "message": "string",
+    "field": "author"
+  })
+  res.status(400).send({
+  "errorsMessages": errors
+})}
 })
 
 app.get('/videos/:videoId', (req: Request , res: Response) => {
@@ -88,7 +91,8 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
   if (video && videoId) {
     if (title?.length < 40 && typeof title === 'string' &&
      author?.length < 20 && typeof author === 'string' && 
-     availableResolutions && canBeDownloaded &&  minAgeRestriction && publicationDate) {
+     availableResolutions && 
+     canBeDownloaded && typeof canBeDownloaded === 'boolean' &&  minAgeRestriction && publicationDate) {
      video.title = title
      video.author = author
      video.availableResolutions = availableResolutions
@@ -97,14 +101,23 @@ app.put('/videos/:videoId', (req: Request , res: Response) => {
      video.publicationDate = publicationDate
      res.status(204).send()
   }
-  else res.status(400).send({
-  "errorsMessages": [
-    {
+  else {
+    const errors = []
+    if (title?.length < 40 && typeof title === 'string') errors.push({
       "message": "string",
-      "field": "string"
-    }
-  ]
-})
+      "field": "title"
+    })
+    if (author?.length < 20 && typeof author === 'string' ) errors.push({
+      "message": "string",
+      "field": "author"
+    })
+    if (canBeDownloaded && typeof canBeDownloaded === 'boolean' ) errors.push({
+      "message": "string",
+      "field": "canBeDownloaded"
+    })
+    res.status(400).send({
+  "errorsMessages": errors
+})}
  }
   else res.status(404).send()
   })
@@ -121,8 +134,6 @@ console.log('videoId', videoId, 'video',video ,'videoIndex',videoIndex );
   console.log(videos)
 }
 else res.status(404).send()
-// videos = (videoIndex && videos.splice(videoIndex, 1)) || []
-// console.log(videos)
 })
 
 app.listen(port, () => {
