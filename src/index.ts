@@ -1,4 +1,6 @@
 import  express, {Request, Response}  from 'express'
+import bodyParser from 'body-parser'
+
 const app = express()
 const port = process.env.PORT || 3002
 
@@ -40,6 +42,8 @@ const videos = [
     },
   ]
 
+  app.use(bodyParser({}))
+
 app.delete('/testing/all-data', (req: Request , res: Response) => {
   res.status(204).send()
 })
@@ -54,10 +58,9 @@ app.get('/videos', (req: Request , res: Response) => {
 
 app.post('/videos', (req: Request , res: Response) => {
 const {title, author, availableResolutions} = req.body 
-// if (title?.length < 40 && typeof title === 'string' 
-// && author?.length < 20 && typeof author === 'string' 
-// && availableResolutions) {
-  console.log("POST")
+console.log('TTT', req);
+if (title?.length < 40 && typeof title === 'string' 
+&& author?.length < 20 && typeof author === 'string' ) {
   const currentDate = new Date().toISOString()
   const video = {
     "id": 3,
@@ -71,7 +74,15 @@ const {title, author, availableResolutions} = req.body
   }
   videos.push(video)
   res.status(201).send(video)
-// }
+}
+else res.status(400).send({
+  "errorsMessages": [
+    {
+      "message": "string",
+      "field": "string"
+    }
+  ]
+})
 })
 
 app.get('/videos/:videoId', (req: Request , res: Response) => {
