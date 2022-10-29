@@ -15,7 +15,9 @@ const youtubeUrlValidation = body('youtubeUrl').trim()
 .isLength({min: 0, max: 100})
 .withMessage('length is from 0 to 100')
 .isString()
-.withMessage(`dosn't string`)
+.withMessage(`not string`)
+.isURL()
+.withMessage(`not url`)
 
 
 blogsRouter.get('/', (req: Request , res: Response) => {
