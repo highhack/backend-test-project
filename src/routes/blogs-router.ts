@@ -23,6 +23,7 @@ const youtubeUrlValidation = body('youtubeUrl').trim()
 
 
 
+
 blogsRouter.get('/', (req: Request , res: Response) => {
   const blogs = blogsRepository.getAllBlogs()
     res.status(200).send(blogs)
@@ -33,7 +34,6 @@ nameValidation,
 youtubeUrlValidation,
 inputValidationMiddleware,
 (req: Request , res: Response) => {
-  if(req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') res.status(401).send()
   const blog = blogsRepository.createBlog(req.body)
   res.status(201).send(blog)
   })
@@ -50,7 +50,6 @@ blogsRouter.get('/:blogId', (req: Request , res: Response) => {
  youtubeUrlValidation,
  inputValidationMiddleware,
  (req: Request , res: Response) => {
-  if(req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') res.status(401).send()
     const blogId = req.params.blogId
     const answer = blogsRepository.updateBlog(req.body, blogId)
     if(answer?.blog) res.status(204).send()
@@ -59,7 +58,6 @@ blogsRouter.get('/:blogId', (req: Request , res: Response) => {
     })
     
   blogsRouter.delete('/:blogId', (req: Request , res: Response) => {
-    if(req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') res.status(401).send()
   const blogId = req.params.blogId
 const isDeleted = blogsRepository.removeBlog(blogId)
   if(isDeleted)  res.status(204).send()
