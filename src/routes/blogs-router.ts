@@ -6,6 +6,7 @@ import { blogsRepository } from "../repositories/blogs-repository";
 export const blogsRouter = Router({})
 export const deleteAllBlogsRouter = Router({})
 
+
 const nameValidation = body('name')
 .isLength({min: 0, max: 15})
 .withMessage('length is from 0 to 15')
@@ -20,6 +21,8 @@ const youtubeUrlValidation = body('youtubeUrl').trim()
 .withMessage(`not url`)
 
 
+
+
 blogsRouter.get('/', (req: Request , res: Response) => {
   const blogs = blogsRepository.getAllBlogs()
     res.status(200).send(blogs)
@@ -30,12 +33,9 @@ nameValidation,
 youtubeUrlValidation,
 inputValidationMiddleware,
 (req: Request , res: Response) => {
+  if(req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') res.status(401).send()
   const blog = blogsRepository.createBlog(req.body)
   res.status(201).send(blog)
-  // if(answer?.blog) res.status(201).send(answer?.blog)
-  // if(answer?.errors)  res.status(400).send({
-  //   "errorsMessages": answer?.errors
-  // })
   })
 
 blogsRouter.get('/:blogId', (req: Request , res: Response) => {
@@ -50,6 +50,7 @@ blogsRouter.get('/:blogId', (req: Request , res: Response) => {
  youtubeUrlValidation,
  inputValidationMiddleware,
  (req: Request , res: Response) => {
+  if(req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') res.status(401).send()
     const blogId = req.params.blogId
     const answer = blogsRepository.updateBlog(req.body, blogId)
     if(answer?.blog) res.status(204).send()
@@ -58,6 +59,7 @@ blogsRouter.get('/:blogId', (req: Request , res: Response) => {
     })
     
   blogsRouter.delete('/:blogId', (req: Request , res: Response) => {
+    if(req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') res.status(401).send()
   const blogId = req.params.blogId
 const isDeleted = blogsRepository.removeBlog(blogId)
   if(isDeleted)  res.status(204).send()
