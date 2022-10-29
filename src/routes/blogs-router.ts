@@ -18,7 +18,7 @@ const youtubeUrlValidation = body('youtubeUrl')
 .isString()
 // .withMessage(`not string`)
 .isURL()
-.withMessage(`not url`)
+// .withMessage(`not url`)
 
 
 
