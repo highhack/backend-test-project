@@ -58,6 +58,7 @@ blogsRouter.get('/:blogId', (req: Request , res: Response) => {
     })
     
   blogsRouter.delete('/:blogId', (req: Request , res: Response) => {
+    if(req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') res.status(401).send()
   const blogId = req.params.blogId
 const isDeleted = blogsRepository.removeBlog(blogId)
   if(isDeleted)  res.status(204).send()
