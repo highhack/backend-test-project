@@ -6,17 +6,18 @@ import { blogsRepository } from "../repositories/blogs-repository";
 export const blogsRouter = Router({})
 export const deleteAllBlogsRouter = Router({})
 
-const trimSpaces = body().trim().isLength({min: 1})
 const nameValidation = body('name')
-.isLength({min: 0, max: 15})
-.withMessage('length is from 0 to 15')
 .isString()
-.withMessage(`dosn't string`)
+.trim()
+.isLength({min: 1, max: 15})
+// .withMessage('length is from 0 to 15')
+// .withMessage(`dosn't string`)
 const youtubeUrlValidation = body('youtubeUrl')
-.isLength({min: 0, max: 100})
-// .withMessage('length is from 0 to 100')
 .isString()
 // .withMessage(`not string`)
+.trim()
+.isLength({min: 1, max: 100})
+// .withMessage('length is from 0 to 100')
 .isURL()
 // .withMessage(`not url`)
 
@@ -30,7 +31,6 @@ blogsRouter.get('/', (req: Request , res: Response) => {
   })
 
 blogsRouter.post('/', 
-trimSpaces,
 nameValidation,
 youtubeUrlValidation,
 inputValidationMiddleware,
@@ -47,7 +47,6 @@ blogsRouter.get('/:blogId', (req: Request , res: Response) => {
   })
 
  blogsRouter.put('/:blogId',
- trimSpaces,
  nameValidation,
  youtubeUrlValidation,
  inputValidationMiddleware,
