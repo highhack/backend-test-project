@@ -10,11 +10,15 @@ if(!errors.isEmpty()) {
     const youtubeUrlError = newErrors.find(err => err.field === 'youtubeUrl')
     const titleError = newErrors.find(err => err.field === 'title')
     const shortDescriptionError = newErrors.find(err => err.field === 'shortDescription')
+    const contentError = newErrors.find(err => err.field === 'content')
+    const blogIdError = newErrors.find(err => err.field === 'blogId')
     const selectedErrors = []
     nameError && selectedErrors.push(nameError)
     youtubeUrlError && selectedErrors.push(youtubeUrlError)
     titleError && selectedErrors.push(titleError)
     shortDescriptionError && selectedErrors.push(shortDescriptionError)
+    contentError && selectedErrors.push(contentError)
+    blogIdError && selectedErrors.push(blogIdError)
   return res.status(400).json({
     "errorsMessages": selectedErrors
   })
