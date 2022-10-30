@@ -2,8 +2,10 @@ import  express, {Request, Response} from 'express'
 import bodyParser from 'body-parser'
 import { videoRouter } from './routes/videos-router'
 import {  blogsRouter } from './routes/blogs-router'
+import {  postsRouter } from './routes/posts-router'
 import { videosRepository } from './repositories/videos-repository'
 import { blogsRepository } from './repositories/blogs-repository'
+import { postsRepository } from './repositories/posts-repository'
 
 
 export const app = express()
@@ -17,11 +19,13 @@ app.get('/', (req: Request , res: Response) => {
 app.delete('/testing/all-data', (req: Request , res: Response) => {
  videosRepository.deleteAllVideo()
  blogsRepository.deleteAllBlogs()
+ postsRepository.deleteAllPosts()
      res.status(204).send()
  })
  
 app.use('/videos', videoRouter)
 app.use('/blogs', blogsRouter)
+app.use('/posts', postsRouter)
 
 
 app.listen(port, () => {
