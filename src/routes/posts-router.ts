@@ -1,6 +1,7 @@
 import  { Router, Request, Response } from "express";
 import { body} from "express-validator";
 import { inputValidationMiddleware } from "../input-validation-middleware";
+import { blogsRepository } from "../repositories/blogs-repository";
 import { postsRepository } from "../repositories/posts-repository";
 
 export const postsRouter = Router({})
@@ -22,6 +23,8 @@ const contentValidation = body('content')
 .isLength({min: 0, max: 1000})
 const blogIdValidation = body('blogId')
 .isString()
+.trim()
+.isLength({min: 0, max: 40})
 
 
 
@@ -38,6 +41,8 @@ blogIdValidation,
 inputValidationMiddleware,
 (req: Request , res: Response) => {
   const post = postsRepository.createPost(req.body)
+  const blogs = blogsRepository.getAllBlogs()
+  // if(blogs.some(bl => bl.id === post.blogId)) 
   res.status(201).send(post)
   })
 
