@@ -24,7 +24,7 @@ const contentValidation = body('content')
 const blogIdValidation = body('blogId')
 .isString()
 .trim()
-.isLength({min: 0, max: 40})
+.isLength({min: 0, max: 25})
 
 
 
