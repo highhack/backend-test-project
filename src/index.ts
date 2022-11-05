@@ -27,7 +27,11 @@ app.use('/videos', videoRouter)
 app.use('/blogs', blogsRouter)
 app.use('/posts', postsRouter)
 
+const startApp = async () => {
+  await runDB()
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+  })
+}
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+startApp()
