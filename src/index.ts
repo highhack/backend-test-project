@@ -35,3 +35,7 @@ const startApp = async () => {
 }
 
 startApp()
+
+function runDB() {
+  throw new Error('Function not implemented.')
+}
