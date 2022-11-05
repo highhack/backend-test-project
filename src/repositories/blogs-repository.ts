@@ -1,3 +1,5 @@
+import { SomeError } from "../input-validation-middleware";
+
 interface Blog {
     id: string;
     name: string;
@@ -46,10 +48,10 @@ updateBlog: (
            return {blog: blog}
         }
         else {
-          const errors = []
+          const errors: SomeError[] = []
           if (!youtubeUrl ||  youtubeUrl?.length > 100 || typeof youtubeUrl !== 'string' ) errors.push({
-            "message": "url is not correct",
-            "field": "youtubeUrl"
+            message: "url is not correct",
+            field: "youtubeUrl",
           })
           return {errors: errors}
           }
