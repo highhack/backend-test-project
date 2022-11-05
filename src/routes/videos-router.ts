@@ -1,10 +1,8 @@
-import express, { Router, Request, Response } from "express";
+import { Router, Request, Response } from "express";
 import { videosRepository } from "../repositories/videos-repository";
     
 export const videoRouter = Router({})
 export const deleteAllVideosRouter = Router({})
-const app = express()
-
 
 videoRouter.get('/', (req: Request , res: Response) => {
   const videos = videosRepository.getAllVideos()
