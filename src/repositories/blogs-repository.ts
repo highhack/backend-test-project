@@ -6,7 +6,7 @@ export interface Blog {
     youtubeUrl: string;
   }
   
-  export let blogs: Blog[] = []
+export let blogs: Blog[] = []
 
 
 
@@ -31,7 +31,7 @@ async createBlog(body: {name: string; youtubeUrl: string}): Promise<Blog>{
 },
 
 async findBlog(id: string): Promise<Blog | undefined> {
-    return blogs.find(v => v.id === id) 
+  return blogs.find(v => v.id === id) 
 },
 
 async updateBlog(
@@ -66,10 +66,10 @@ async updateBlog(
       //     }
       //  }
 },
-async removeBlog(id: string): Promise<boolean | undefined>{
+async removeBlog  (id: string): Promise<boolean | undefined>{
     const blog = blogs.find(v => v.id === id)
   if (blog) {
-  const videoIndex = blog && blogs.indexOf(blog)
+const videoIndex = blog && blogs.indexOf(blog)
    blogs.splice(videoIndex, 1)
 return true
   }

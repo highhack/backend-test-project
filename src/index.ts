@@ -6,6 +6,7 @@ import {  postsRouter } from './routes/posts-router'
 import { videosRepository } from './repositories/videos-repository'
 import { blogsRepository } from './repositories/blogs-repository'
 import { postsRepository } from './repositories/posts-repository'
+import { runDb } from './repositories/db'
 
 
 export const app = express()
@@ -28,7 +29,7 @@ app.use('/blogs', blogsRouter)
 app.use('/posts', postsRouter)
 
 const startApp = async () => {
-  await runDB()
+  await runDb()
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
   })
@@ -36,6 +37,3 @@ const startApp = async () => {
 
 startApp()
 
-function runDB() {
-  throw new Error('Function not implemented.')
-}

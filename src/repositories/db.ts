@@ -1,4 +1,4 @@
-import MongoClient from 'mongodb'
+import { MongoClient } from 'mongodb';
 
 const mongoUri = process.env.mongoURI || "mongodb://0.0.0.0:27017"
 
