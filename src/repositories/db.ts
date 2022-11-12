@@ -1,11 +1,13 @@
 import { MongoClient } from 'mongodb';
 import { Blog } from './blogs-repository-db';
 // import { Post } from './posts-repository-db';
+import * as dotenv from 'dotenv' 
+dotenv.config()
 
 // const mongoUri = process.env.mongoURI || "mongodb://0.0.0.0:27017" 
-const mongoUri = "mongodb+srv://gerichjs:gg85st88vg63jm63@cluster0.lgwviao.mongodb.net/gerichclub?retryWrites=true&w=majority" 
+const mongoUri =  process.env.MONGO_URL 
 
-
+if (!mongoUri) throw new Error ('url not found')
 export const client = new MongoClient(mongoUri)
 
 // export const postsCollection = client.db().collection<Post>('posts')
