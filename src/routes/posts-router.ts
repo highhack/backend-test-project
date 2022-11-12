@@ -1,8 +1,8 @@
 import  { Router, Request, Response } from "express";
 import { body} from "express-validator";
 import { inputValidationMiddleware } from "../input-validation-middleware";
-import { blogsRepository } from "../repositories/blogs-repository";
-import { postsRepository } from "../repositories/posts-repository";
+import { blogsRepository } from "../repositories/blogs-repository-db";
+import { postsRepository } from "../repositories/posts-repository-db";
 
 export const postsRouter = Router({})
 export const deleteAllBlogsRouter = Router({})
@@ -39,10 +39,10 @@ shortDescriptionalidation,
 contentValidation,
 blogIdValidation,
 inputValidationMiddleware,
-(req: Request , res: Response) => {
+async (req: Request , res: Response) => {
   const post = postsRepository.createPost(req.body)
   const blogs = blogsRepository.getAllBlogs()
-  // if(blogs.some(bl => bl.id === post.blogId)) 
+  if((await blogs).some(async bl => bl.id === (await post).blogId)) 
   res.status(201).send(post)
   })
 

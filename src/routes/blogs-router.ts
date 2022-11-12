@@ -1,7 +1,7 @@
 import  { Router, Request, Response } from "express";
 import { body} from "express-validator";
 import { inputValidationMiddleware } from "../input-validation-middleware";
-import { Blog, blogsRepository } from "../repositories/blogs-repository";
+import { Blog, blogsRepository } from "../repositories/blogs-repository-db";
 
 export const blogsRouter = Router({})
 export const deleteAllBlogsRouter = Router({})

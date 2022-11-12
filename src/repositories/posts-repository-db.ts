@@ -1,3 +1,5 @@
+import { client } from "./db";
+
 interface Post {
     id: string;
     title: string;
@@ -17,6 +19,8 @@ async deleteAllPosts(): Promise<Post[]> {
     return posts
 },
 async getAllPosts(): Promise<Post[]> {
+  // console.log('iii', client.db('gerichclub'))
+  // return  postsCollection.find({title: 'post'}).toArray()
     return posts
 },
 async createPost(body: {title: string, shortDescription: string, content: string, blogId: string}) {
