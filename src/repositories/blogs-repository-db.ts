@@ -9,9 +9,9 @@ export interface Blog {
   
 
 export const blogsRepository = {
-async deleteAllBlogs(): Promise<void> {
-  const result =  blogsCollection.deleteMany([])
-  //   return blogsCollection.find({}).toArray()
+async deleteAllBlogs(): Promise<Blog[]> {
+  blogsCollection.deleteMany({})
+    return blogsCollection.find({}).toArray()
 },
 async getAllBlogs(): Promise<Blog[]> {
   return blogsCollection.find({}).toArray()
