@@ -19,8 +19,7 @@ async deleteAllPosts(): Promise<Post[]> {
     return postsCollection.find({}).toArray()
 },
 async getAllPosts(): Promise<Post[]> {
-  return  postsCollection.find({title: 'post'}).toArray()
-    return posts
+  return postsCollection.find({}).toArray()
 },
 async createPost(body: {title: string, shortDescription: string, content: string, blogId: string}) {
 
