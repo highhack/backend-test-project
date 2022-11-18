@@ -42,8 +42,8 @@ blogIdValidation,
 inputValidationMiddleware,
 async (req: Request , res: Response) => {
   const post = await postsRepository.createPost(req.body)
-  const blogs = await blogsRepository.getAllBlogs()
-  if(blogs.some(bl => bl.id === post.blogId)) 
+  // const blogs = await blogsRepository.getAllBlogs()
+  // if(blogs.some(bl => bl.id === post.blogId)) 
   res.status(201).send(post)
   })
 

@@ -18,6 +18,7 @@ async deleteAllPosts(): Promise<Post[]> {
    postsCollection.deleteMany({})
     return postsCollection.find({}).toArray()
 },
+
 async getAllPosts(): Promise<Post[]> {
   console.log('postsCollection.find({}).toArray()', postsCollection.find({}).toArray());
   return postsCollection.find({}).toArray()
