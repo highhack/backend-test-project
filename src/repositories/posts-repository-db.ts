@@ -15,7 +15,7 @@ export interface Post {
 
 export const postsRepository = {
 async deleteAllPosts(): Promise<void> {
-  const result =  postsCollection.deleteMany({})
+  const result =  postsCollection.deleteMany([])
     // return postsCollection.find({}).toArray()
 },
 async getAllPosts(): Promise<Post[]> {
