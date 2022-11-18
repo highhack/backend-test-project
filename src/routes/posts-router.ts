@@ -59,10 +59,10 @@ postsRouter.get('/:postId', (req: Request , res: Response) => {
  contentValidation,
  blogIdValidation,
  inputValidationMiddleware,
- (req: Request , res: Response) => {
+ async (req: Request , res: Response) => {
     const postId = req.params.postId
     const answer = postsRepository.updatePost(req.body, postId)
-    if(answer) res.status(204).send()
+    if(await answer) res.status(204).send()
     // if(answer?.errors) res.status(400).send()
     else res.status(404).send()
     })
