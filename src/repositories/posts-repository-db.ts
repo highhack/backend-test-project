@@ -41,12 +41,12 @@ async createPost(body: {title: string, shortDescription: string, content: string
   return await postsCollection.findOne({id: id}) || undefined
 },
 
-updatePost: (
+updatePost: async (
     body: {title: string, shortDescription: string, content: string, blogId: string},
     postId: string
     ) => {
         const {title, shortDescription, content, blogId} = body 
-        const post = posts.find(v => v.id === postId)
+        const post = await postsCollection.findOne({id: blogId})
         if (post && postId) {
         //   if(youtubeUrl?.length <= 100 && typeof youtubeUrl === 'string') {
           postsCollection.updateOne({id: postId}, {$set: 
