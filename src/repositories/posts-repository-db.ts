@@ -1,6 +1,6 @@
-import { client } from "./db";
+import { postsCollection } from "./db";
 
-interface Post {
+export interface Post {
     id: string;
     title: string;
     shortDescription: string;
@@ -15,12 +15,11 @@ interface Post {
 
 export const postsRepository = {
 async deleteAllPosts(): Promise<Post[]> {
-    posts = []
-    return posts
+  const result =  postsCollection.deleteMany({})
+    return postsCollection.find({}).toArray()
 },
 async getAllPosts(): Promise<Post[]> {
-  // console.log('iii', client.db('gerichclub'))
-  // return  postsCollection.find({title: 'post'}).toArray()
+  return  postsCollection.find({title: 'post'}).toArray()
     return posts
 },
 async createPost(body: {title: string, shortDescription: string, content: string, blogId: string}) {
@@ -33,14 +32,14 @@ async createPost(body: {title: string, shortDescription: string, content: string
         "content": content,
         "blogId": blogId,
         "blogName": 'blogName',
+        "createAt": new Date().toISOString(),
       }
-      posts.push(post)
+      postsCollection.insertOne(post)
       return post
 },
 
-findPost: (id: string) => {
-    const post = posts.find(v => v.id === id)
-    return post
+ findPost: async (id: string) => {
+  return await postsCollection.findOne({id: id}) || undefined
 },
 
 updatePost: (
@@ -51,11 +50,19 @@ updatePost: (
         const post = posts.find(v => v.id === postId)
         if (post && postId) {
         //   if(youtubeUrl?.length <= 100 && typeof youtubeUrl === 'string') {
-           post.title = title
-           post.shortDescription = shortDescription
-           post.content = content
-           post.blogId = blogId
-           return {post: post}
+          postsCollection.updateOne({id: postId}, {$set: 
+            {
+              title: title, 
+              shortDescription: shortDescription, 
+              content:content, 
+              blogId: blogId,
+            }})
+          //  post.title = title
+          //  post.shortDescription = shortDescription
+          //  post.content = content
+          //  post.blogId = blogId
+          //  return {post: post}
+          return true
         // }
     //     else {
     //       const errors = []
@@ -68,12 +75,8 @@ updatePost: (
        }
 },
 
-removePost: (id: string) => {
-    const post = posts.find(v => v.id === id)
-  if (post) {
-  const postIndex = post && posts.indexOf(post)
-   posts.splice(postIndex, 1)
-return true
-  }
+removePost: async (id: string) => {
+  const result = await postsCollection.deleteOne({id:id})
+  return result.deletedCount === 1
 }
 }

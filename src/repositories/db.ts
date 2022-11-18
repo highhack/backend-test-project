@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 import { Blog } from './blogs-repository-db';
-// import { Post } from './posts-repository-db';
+import { Post } from './posts-repository-db';
 import * as dotenv from 'dotenv' 
 dotenv.config()
 
@@ -10,7 +10,7 @@ const mongoUri =  process.env.MONGO_URL
 if (!mongoUri) throw new Error ('url not found')
 export const client = new MongoClient(mongoUri)
 
-// export const postsCollection = client.db().collection<Post>('posts')
+export const postsCollection = client.db().collection<Post>('posts')
 export const blogsCollection = client.db('gerichclub').collection<Blog>('blogs')
 
 export async function runDb() {
