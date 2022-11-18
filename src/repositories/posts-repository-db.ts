@@ -9,7 +9,7 @@ export interface Post {
     blogName: string;
   }
   
-  export let posts: Post[] = []
+  // export let posts: Post[] = []
 
 
 
