@@ -22,6 +22,7 @@ async getAllPosts(): Promise<Post[]> {
   console.log('postsCollection.find({}).toArray()', postsCollection.find({}).toArray());
   return postsCollection.find({}).toArray()
 },
+
 async createPost(body: {title: string, shortDescription: string, content: string, blogId: string}) {
 
     const {title, shortDescription, content, blogId} = body 
