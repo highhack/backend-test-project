@@ -13,6 +13,7 @@ export const client = new MongoClient(mongoUri)
 export const postsCollection = client.db('gerichclub').collection<Post>('posts')
 export const blogsCollection = client.db('gerichclub').collection<Blog>('blogs')
 
+
 export async function runDb() {
     try {
         await client.connect();
