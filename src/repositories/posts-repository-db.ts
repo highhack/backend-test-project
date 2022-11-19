@@ -38,7 +38,7 @@ async createPost(body: {title: string, shortDescription: string, content: string
       }
       console.log('post', post);
       console.log('postsCollection.insertOne(post)', postsCollection.insertOne(post));
-      postsCollection.insertOne(post)
+      await postsCollection.insertOne(post)
       return post
 },
 

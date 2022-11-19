@@ -62,8 +62,8 @@ postsRouter.get('/:postId', (req: Request , res: Response) => {
  inputValidationMiddleware,
  async (req: Request , res: Response) => {
     const postId = req.params.postId
-    const answer = postsRepository.updatePost(req.body, postId)
-    if(await answer) res.status(204).send()
+    const answer = await postsRepository.updatePost(req.body, postId)
+    if(answer) res.status(204).send()
     // if(answer?.errors) res.status(400).send()
     else res.status(404).send()
     })
