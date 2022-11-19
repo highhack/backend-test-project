@@ -61,6 +61,7 @@ updatePost: async (
               content:content, 
               blogId: blogId,
             }})
+            
           //  post.title = title
           //  post.shortDescription = shortDescription
           //  post.content = content
