@@ -16,13 +16,13 @@ async deleteAllBlogs(): Promise<Blog[]> {
 async getAllBlogs(): Promise<Blog[]> {
   return blogsCollection.find({}).toArray()
 },
-async createBlog(body: {name: string; youtubeUrl: string}): Promise<Blog>{
+async createBlog(body: {name: string; websiteUrl: string}): Promise<Blog>{
 
-    const {name, youtubeUrl} = body 
+    const {name, websiteUrl} = body 
       const blog = {
         "id": new Date().getTime().toString(),
         "name": name,
-        "websiteUrl": youtubeUrl,
+        "websiteUrl": websiteUrl,
         "createAt": new Date().toISOString(),
       }
       blogsCollection.insertOne(blog)
@@ -34,15 +34,15 @@ async findBlog(id: string): Promise<Blog | undefined> {
 },
 
 async updateBlog(
-    body: {name: string; youtubeUrl: string},
+    body: {name: string; websiteUrl: string},
     blogId: string
     ): Promise<boolean | undefined >{
-        const {name, youtubeUrl } = body 
+        const {name, websiteUrl } = body 
         // const blog = blogs.find(v => v.id === blogId)
         const blog = await blogsCollection.findOne({id: blogId})
         if (blog) {
-          if(youtubeUrl?.length <= 100 && typeof youtubeUrl === 'string') {
-           blogsCollection.updateOne({id: blogId}, {$set: {name: name, youtubeUrl: youtubeUrl}})
+          if(websiteUrl?.length <= 100 && typeof websiteUrl === 'string') {
+           blogsCollection.updateOne({id: blogId}, {$set: {name: name, websiteUrl: websiteUrl}})
            return true
         }
         else {
