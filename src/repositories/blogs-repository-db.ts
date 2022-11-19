@@ -3,6 +3,7 @@ import {  blogsCollection } from "./db";
 export interface Blog {
     id: string;
     name: string;
+    description: string;
     websiteUrl: string;
     createAt: string
   }
@@ -16,12 +17,13 @@ async deleteAllBlogs(): Promise<Blog[]> {
 async getAllBlogs(): Promise<Blog[]> {
   return blogsCollection.find({}).toArray()
 },
-async createBlog(body: {name: string; websiteUrl: string}): Promise<Blog>{
+async createBlog(body: {name: string; description: string; websiteUrl: string}): Promise<Blog>{
 
-    const {name, websiteUrl} = body 
+    const {name, description, websiteUrl} = body 
       const blog = {
         "id": new Date().getTime().toString(),
         "name": name,
+        "description": description,
         "websiteUrl": websiteUrl,
         "createAt": new Date().toISOString(),
       }

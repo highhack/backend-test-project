@@ -20,6 +20,20 @@ const websiteUrlValidation = body('websiteUrl')
 .withMessage('length is from 0 to 100')
 .isURL()
 .withMessage(`not url`)
+const descriptionValidation = body('description')
+.isString()
+.withMessage(`not string`)
+.trim()
+.isLength({min: 1, max: 500})
+.withMessage('length is from 0 to 100')
+const createAtValidation = body('createAt')
+.isString()
+.withMessage(`not string`)
+.trim()
+.matches(/\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/)
+.withMessage('date is not correct')
+.isLength({min: 1, max: 500})
+.withMessage('length is from 0 to 100')
 
 
 
@@ -33,6 +47,7 @@ blogsRouter.get('/', async (req: Request , res: Response) => {
 
 blogsRouter.post('/', 
 nameValidation,
+descriptionValidation,
 websiteUrlValidation,
 inputValidationMiddleware,
 async (req: Request , res: Response) => {
@@ -51,6 +66,7 @@ blogsRouter.get('/:blogId', async (req: Request , res: Response) => {
 
  blogsRouter.put('/:blogId',
  nameValidation,
+ descriptionValidation,
  websiteUrlValidation,
  inputValidationMiddleware, async (req: Request , res: Response) =>  {
     const blogId = req.params.blogId
