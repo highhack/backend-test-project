@@ -29,7 +29,7 @@ const blogIdValidation = body('blogId')
 
 
 postsRouter.get('/', async (req: Request , res: Response) => {
-  const postsPromise = postsRepository.getAllPosts()
+  const postsPromise =  postsRepository.getAllPosts()
   const posts = await postsPromise
     res.status(200).send(posts)
   })
@@ -41,7 +41,8 @@ contentValidation,
 blogIdValidation,
 inputValidationMiddleware,
 async (req: Request , res: Response) => {
-  const post = await postsRepository.createPost(req.body)
+  const postPromise =  postsRepository.createPost(req.body)
+  const post = await postPromise
   // const blogs = await blogsRepository.getAllBlogs()
   // if(blogs.some(bl => bl.id === post.blogId)) 
   res.status(201).send(post)
