@@ -18,7 +18,7 @@ const youtubeUrlValidation = body('youtubeUrl')
 .trim()
 .isLength({min: 1, max: 100})
 // .withMessage('length is from 0 to 100')
-.isURL()
+// .isURL()
 // .withMessage(`not url`)
 
 
