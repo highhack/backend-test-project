@@ -11,6 +11,7 @@ import { runDb } from './repositories/db'
 
 export const app = express()
 const port = process.env.PORT || 3002
+
 app.use(bodyParser({}))
 
 app.get('/', (req: Request , res: Response) => {
