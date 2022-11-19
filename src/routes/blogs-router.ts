@@ -14,12 +14,12 @@ const nameValidation = body('name')
 // .withMessage(`dosn't string`)
 const youtubeUrlValidation = body('youtubeUrl')
 .isString()
-// .withMessage(`not string`)
+.withMessage(`not string`)
 .trim()
 .isLength({min: 1, max: 100})
-// .withMessage('length is from 0 to 100')
-// .isURL()
-// .withMessage(`not url`)
+.withMessage('length is from 0 to 100')
+.isURL()
+.withMessage(`not url`)
 
 
 
