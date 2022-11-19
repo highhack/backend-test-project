@@ -12,7 +12,7 @@ const nameValidation = body('name')
 .isLength({min: 1, max: 15})
 // .withMessage('length is from 0 to 15')
 // .withMessage(`dosn't string`)
-const youtubeUrlValidation = body('youtubeUrl')
+const websiteUrlValidation = body('youtubeUrl')
 .isString()
 .withMessage(`not string`)
 .trim()
@@ -33,7 +33,7 @@ blogsRouter.get('/', async (req: Request , res: Response) => {
 
 blogsRouter.post('/', 
 nameValidation,
-youtubeUrlValidation,
+websiteUrlValidation,
 inputValidationMiddleware,
 async (req: Request , res: Response) => {
   const blogPromise = blogsRepository.createBlog(req.body)
@@ -51,7 +51,7 @@ blogsRouter.get('/:blogId', async (req: Request , res: Response) => {
 
  blogsRouter.put('/:blogId',
  nameValidation,
- youtubeUrlValidation,
+ websiteUrlValidation,
  inputValidationMiddleware, async (req: Request , res: Response) =>  {
     const blogId = req.params.blogId
     const isUpdatedPromise = blogsRepository.updateBlog(req.body, blogId)

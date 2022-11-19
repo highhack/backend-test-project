@@ -3,7 +3,7 @@ import {  blogsCollection } from "./db";
 export interface Blog {
     id: string;
     name: string;
-    youtubeUrl: string;
+    websiteUrl: string;
     createAt: string
   }
   
@@ -22,7 +22,7 @@ async createBlog(body: {name: string; youtubeUrl: string}): Promise<Blog>{
       const blog = {
         "id": new Date().getTime().toString(),
         "name": name,
-        "youtubeUrl": youtubeUrl,
+        "websiteUrl": youtubeUrl,
         "createAt": new Date().toISOString(),
       }
       blogsCollection.insertOne(blog)

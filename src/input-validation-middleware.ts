@@ -12,14 +12,14 @@ export const inputValidationMiddleware = (req: Request, res: Response, next: Nex
 if(!errors.isEmpty()) {
     const newErrors = errors.array().map(err => {return {"message": err.msg, "field": err.param}})
     const nameError= newErrors.find(err => err.field === 'name') 
-    const youtubeUrlError = newErrors.find(err => err.field === 'youtubeUrl')
+    const websiteUrlError = newErrors.find(err => err.field === 'youtubeUrl')
     const titleError = newErrors.find(err => err.field === 'title')
     const shortDescriptionError = newErrors.find(err => err.field === 'shortDescription')
     const contentError = newErrors.find(err => err.field === 'content')
     const blogIdError = newErrors.find(err => err.field === 'blogId')
     const selectedErrors: SomeError[] = []
     nameError && selectedErrors.push(nameError) 
-    youtubeUrlError && selectedErrors.push(youtubeUrlError)
+    websiteUrlError && selectedErrors.push(websiteUrlError)
     titleError && selectedErrors.push(titleError)
     shortDescriptionError && selectedErrors.push(shortDescriptionError)
     contentError && selectedErrors.push(contentError)
