@@ -54,6 +54,7 @@ postsRouter.get('/:postId', (req: Request , res: Response) => {
     if (post && postId) res.send(post)
     else res.status(404).send()
   })
+  
 
  postsRouter.put('/:postId',
  titleValidation,
