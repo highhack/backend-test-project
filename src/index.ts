@@ -17,10 +17,11 @@ app.get('/', (req: Request , res: Response) => {
   res.status(200).send('videos and blogs!!!')
 })
 
-app.delete('/testing/all-data', (req: Request , res: Response) => {
- videosRepository.deleteAllVideo()
- blogsRepository.deleteAllBlogs()
- postsRepository.deleteAllPosts()
+app.delete('/testing/all-data', async (req: Request , res: Response) => {
+  console.log('deleteAll');
+//  videosRepository.deleteAllVideo()
+ await blogsRepository.deleteAllBlogs()
+ await postsRepository.deleteAllPosts()
      res.status(204).send()
  })
  
