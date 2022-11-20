@@ -78,6 +78,6 @@ postsRouter.get('/:postId', async (req: Request , res: Response) => {
   if(postId) {
     const isDeleted = await postsRepository.removePost(postId)
     if (isDeleted)  res.status(204).send()
+    else res.status(404).send()
   }
-  else res.status(404).send()
   })
