@@ -72,7 +72,9 @@ postsRouter.get('/:postId', async (req: Request , res: Response) => {
     else res.status(404).send()
     })
     
-  postsRouter.delete('/:postId', async (req: Request , res: Response) => {
+  postsRouter.delete('/:postId',
+  inputValidationMiddleware,
+   async (req: Request , res: Response) => {
     // if(req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') res.status(401).send()
   const postId = req.params.postId
   if(postId) {
