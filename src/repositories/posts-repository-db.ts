@@ -20,7 +20,7 @@ async deleteAllPosts(): Promise<Post[]> {
 },
 
 async getAllPosts(): Promise<Post[]> {
-  return postsCollection.find({}).toArray()
+  return postsCollection.find({}, { projection: { _id: 0 } }).toArray()
 },
 
 async createPost(body: {title: string, shortDescription: string, content: string, blogId: string}) {
@@ -40,7 +40,7 @@ async createPost(body: {title: string, shortDescription: string, content: string
 },
 
  findPost: async (id: string) => {
- return await postsCollection.findOne({id: id}) || undefined
+ return await postsCollection.findOne({id: id}, { projection: { _id: 0 } }) || undefined
 
 },
 

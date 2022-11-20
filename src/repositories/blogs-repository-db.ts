@@ -33,7 +33,7 @@ async createBlog(body: {name: string; description: string; websiteUrl: string}):
 },
 
 async findBlog(id: string): Promise<Blog | null> {
-  return  blogsCollection.findOne({id: id}) || null
+  return  blogsCollection.findOne({id: id}, { projection: { _id: 0 } }) || null
 },
 
 async updateBlog(
