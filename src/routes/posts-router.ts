@@ -48,9 +48,10 @@ async (req: Request , res: Response) => {
   res.status(201).send(post)
   })
 
-postsRouter.get('/:postId', (req: Request , res: Response) => {
+postsRouter.get('/:postId', async (req: Request , res: Response) => {
     const postId = req.params.postId
-    const post = postsRepository.findPost(postId)
+    const postPromise = postsRepository.findPost(postId)
+    const post = await postPromise
     if (post && postId) res.send(post)
     else res.status(404).send()
   })
@@ -73,7 +74,7 @@ postsRouter.get('/:postId', (req: Request , res: Response) => {
   postsRouter.delete('/:postId', async (req: Request , res: Response) => {
     if(req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') res.status(401).send()
   const postId = req.params.postId
-const isDeleted = postsRepository.removePost(postId)
-  if(await isDeleted)  res.status(204).send()
+const isDeleted = await postsRepository.removePost(postId)
+  if (isDeleted)  res.status(204).send()
   else res.status(404).send()
   })

@@ -43,7 +43,8 @@ async createPost(body: {title: string, shortDescription: string, content: string
 },
 
  findPost: async (id: string) => {
-  return await postsCollection.findOne({id: id}) || undefined
+ return await postsCollection.findOne({id: id}) || undefined
+
 },
 
 updatePost: async (
