@@ -50,9 +50,8 @@ updatePost: async (
     postId: string
     ) => {
         const {title, shortDescription, content, blogId} = body 
-        const post = await postsCollection.findOne({id: blogId})
+        const post = await postsCollection.findOne({id: postId})
         if (post && postId) {
-        //   if(youtubeUrl?.length <= 100 && typeof youtubeUrl === 'string') {
           postsCollection.updateOne({id: postId}, {$set: 
             {
               title: title, 
@@ -60,14 +59,8 @@ updatePost: async (
               content:content, 
               blogId: blogId,
             }})
-            
-          //  post.title = title
-          //  post.shortDescription = shortDescription
-          //  post.content = content
-          //  post.blogId = blogId
-          //  return {post: post}
-          return true
-        // }
+            return true
+
     //     else {
     //       const errors = []
     //       if (!youtubeUrl ||  youtubeUrl?.length > 100 || typeof youtubeUrl !== 'string' ) errors.push({
