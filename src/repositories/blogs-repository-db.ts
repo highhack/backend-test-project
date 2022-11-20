@@ -7,6 +7,7 @@ export interface Blog {
     description: string;
     websiteUrl: string;
     createdAt: string;
+    _id?: string
   }
   
 
@@ -28,7 +29,7 @@ async createBlog(body: {name: string; description: string; websiteUrl: string}):
         "websiteUrl": websiteUrl,
         "createdAt": new Date().toISOString(),
       }
-      await blogsCollection.insertOne(blog)
+     await blogsCollection.insertOne(blog)
       return blog
 },
 

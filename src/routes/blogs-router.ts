@@ -53,6 +53,7 @@ inputValidationMiddleware,
 async (req: Request , res: Response) => {
   const blogPromise = blogsRepository.createBlog(req.body)
   const blog = await blogPromise
+  delete blog._id
   res.status(201).send(blog)
   })
 
