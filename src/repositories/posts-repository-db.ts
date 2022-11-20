@@ -26,7 +26,7 @@ async getAllPosts(): Promise<Post[]> {
 async createPost(body: {title: string, shortDescription: string, content: string, blogId: string}) {
 
     const {title, shortDescription, content, blogId} = body 
-      const post = {
+      const createdPost = {
         "id": new Date().getTime().toString(),
         "title": title,
         "shortDescription": shortDescription,
@@ -35,8 +35,9 @@ async createPost(body: {title: string, shortDescription: string, content: string
         "blogName": 'blogName',
         "createdAt": new Date().toISOString(),
       }
-      postsCollection.insertOne(post)
-      return post
+      await postsCollection.insertOne(createdPost)
+      console.log('createdPost', createdPost);
+      return createdPost
 },
 
  findPost: async (id: string) => {
