@@ -73,9 +73,11 @@ postsRouter.get('/:postId', async (req: Request , res: Response) => {
     })
     
   postsRouter.delete('/:postId', async (req: Request , res: Response) => {
-    if(req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') res.status(401).send()
+    // if(req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') res.status(401).send()
   const postId = req.params.postId
-const isDeleted = await postsRepository.removePost(postId)
-  if (isDeleted)  res.status(204).send()
+  if(postId) {
+    const isDeleted = await postsRepository.removePost(postId)
+    if (isDeleted)  res.status(204).send()
+  }
   else res.status(404).send()
   })
