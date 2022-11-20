@@ -8,6 +8,7 @@ export interface Post {
     blogId: string;
     blogName: string;
     createdAt: string;
+    _id?: string;
   }
 
 
@@ -23,10 +24,10 @@ async getAllPosts(): Promise<Post[]> {
   return postsCollection.find({}, { projection: { _id: 0 } }).toArray()
 },
 
-async createPost(body: {title: string, shortDescription: string, content: string, blogId: string}) {
+async createPost(body: {title: string, shortDescription: string, content: string, blogId: string}): Promise<Post> {
 
     const {title, shortDescription, content, blogId} = body 
-      const createdPost = {
+      const post = {
         "id": new Date().getTime().toString(),
         "title": title,
         "shortDescription": shortDescription,
@@ -35,9 +36,8 @@ async createPost(body: {title: string, shortDescription: string, content: string
         "blogName": 'blogName',
         "createdAt": new Date().toISOString(),
       }
-      await postsCollection.insertOne(createdPost)
-      console.log('createdPost', createdPost);
-      return createdPost
+      await postsCollection.insertOne(post)
+      return post
 },
 
  findPost: async (id: string) => {

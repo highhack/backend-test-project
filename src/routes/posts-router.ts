@@ -13,7 +13,7 @@ const titleValidation = body('title')
 .isLength({min: 1, max: 30})
 // .withMessage('length is from 0 to 15')
 // .withMessage(`dosn't string`)
-const shortDescriptionalidation = body('shortDescription')
+const shortDescriptionaValidation = body('shortDescription')
 .isString()
 .trim()
 .isLength({min: 1, max: 100})
@@ -36,13 +36,14 @@ postsRouter.get('/', async (req: Request , res: Response) => {
 
 postsRouter.post('/', 
 titleValidation,
-shortDescriptionalidation,
+shortDescriptionaValidation,
 contentValidation,
 blogIdValidation,
 inputValidationMiddleware,
 async (req: Request , res: Response) => {
   const postPromise =  postsRepository.createPost(req.body)
   const post = await postPromise
+  delete post._id
   // const blogs = await blogsRepository.getAllBlogs()
   // if(blogs.some(bl => bl.id === post.blogId)) 
   res.status(201).send(post)
@@ -59,7 +60,7 @@ postsRouter.get('/:postId', async (req: Request , res: Response) => {
 
  postsRouter.put('/:postId',
  titleValidation,
- shortDescriptionalidation,
+ shortDescriptionaValidation,
  contentValidation,
  blogIdValidation,
  inputValidationMiddleware,
