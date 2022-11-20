@@ -1,3 +1,4 @@
+import { FindOptions } from "mongodb";
 import {  blogsCollection } from "./db";
 
 export interface Blog {
@@ -5,7 +6,7 @@ export interface Blog {
     name: string;
     description: string;
     websiteUrl: string;
-    createAt: string
+    createdAt: string;
   }
   
 
@@ -15,7 +16,7 @@ async deleteAllBlogs(): Promise<Blog[]> {
     return blogsCollection.find({}).toArray()
 },
 async getAllBlogs(): Promise<Blog[]> {
-  return blogsCollection.find({}).toArray()
+   return blogsCollection.find({}).toArray()
 },
 async createBlog(body: {name: string; description: string; websiteUrl: string}): Promise<Blog>{
 
@@ -25,14 +26,14 @@ async createBlog(body: {name: string; description: string; websiteUrl: string}):
         "name": name,
         "description": description,
         "websiteUrl": websiteUrl,
-        "createAt": new Date().toISOString(),
+        "createdAt": new Date().toISOString(),
       }
-      blogsCollection.insertOne(blog)
+      await blogsCollection.insertOne(blog)
       return blog
 },
 
-async findBlog(id: string): Promise<Blog | undefined> {
-  return await blogsCollection.findOne({id: id}) || undefined
+async findBlog(id: string): Promise<Blog | null> {
+  return  blogsCollection.findOne({id: id}) || null
 },
 
 async updateBlog(

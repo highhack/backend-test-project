@@ -7,9 +7,9 @@ export interface Post {
     content: string;
     blogId: string;
     blogName: string;
+    createdAt: string;
   }
-  
-  // export let posts: Post[] = []
+
 
 
 
@@ -20,7 +20,6 @@ async deleteAllPosts(): Promise<Post[]> {
 },
 
 async getAllPosts(): Promise<Post[]> {
-  console.log('postsCollection.find({}).toArray()', postsCollection.find({}).toArray());
   return postsCollection.find({}).toArray()
 },
 
@@ -34,10 +33,8 @@ async createPost(body: {title: string, shortDescription: string, content: string
         "content": content,
         "blogId": blogId,
         "blogName": 'blogName',
-        "createAt": new Date().toISOString(),
+        "createdAt": new Date().toISOString(),
       }
-      console.log('post', post);
-      console.log('postsCollection.insertOne(post)', postsCollection.insertOne(post));
       postsCollection.insertOne(post)
       return post
 },
