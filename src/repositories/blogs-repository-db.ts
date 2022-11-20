@@ -16,7 +16,7 @@ async deleteAllBlogs(): Promise<Blog[]> {
     return blogsCollection.find({}).toArray()
 },
 async getAllBlogs(): Promise<Blog[]> {
-   return blogsCollection.find({}).toArray()
+   return blogsCollection.find({ }, { projection: { _id: 0 } }).toArray()
 },
 async createBlog(body: {name: string; description: string; websiteUrl: string}): Promise<Blog>{
 
