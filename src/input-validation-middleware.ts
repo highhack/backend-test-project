@@ -7,7 +7,7 @@ export interface SomeError {
 }
 
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    if(req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') res.status(401).send()
+  if(req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') return res.status(401).send()
     const errors = validationResult(req)
 if(!errors.isEmpty()) {
     const newErrors = errors.array().map(err => {return {"message": err.msg, "field": err.param}})
