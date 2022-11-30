@@ -1,5 +1,6 @@
 import { FindOptions } from "mongodb";
-import {  blogsCollection } from "./db";
+import { blogsRepository } from "../repositories/blogs-repository-db";
+import { blogsCollection } from "../repositories/db";
 
 export interface Blog {
     id: string;
@@ -11,22 +12,31 @@ export interface Blog {
   }
   
 
-export const blogsRepository = {
+export const blogsService = {
 async deleteAllBlogs(): Promise<Blog[]> {
   blogsCollection.deleteMany({})
     return blogsCollection.find({}).toArray()
 },
 async getAllBlogs(): Promise<Blog[]> {
-   return blogsCollection.find({ }, { projection: { _id: 0 } }).toArray()
+   return blogsRepository.getAllBlogs()
 },
 
 async findBlog(id: string): Promise<Blog | null> {
-  return  blogsCollection.findOne({id: id}, { projection: { _id: 0 } }) || null
-},
+    return blogsRepository.findBlog(id)
+  },
 
-async createBlog(blog: Blog): Promise<Blog>{
-     await blogsCollection.insertOne(blog)
-      return blog
+async createBlog(body: {name: string; description: string; websiteUrl: string}): Promise<Blog>{
+
+    const {name, description, websiteUrl} = body 
+      const blog = {
+        "id": new Date().getTime().toString(),
+        "name": name,
+        "description": description,
+        "websiteUrl": websiteUrl,
+        "createdAt": new Date().toISOString(),
+      }
+    const createdBlog = blogsRepository.createBlog(blog)
+      return createdBlog
 },
 
 async updateBlog(

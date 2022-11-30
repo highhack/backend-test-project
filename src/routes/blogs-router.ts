@@ -1,7 +1,8 @@
 import  { Router, Request, Response } from "express";
 import { body} from "express-validator";
+import { blogsService } from "../domine/blogs-service";
 import { inputValidationMiddleware } from "../input-validation-middleware";
-import { Blog, blogsRepository } from "../repositories/blogs-repository-db";
+// import { Blog, blogsService } from "../repositories/blogs-repository-db";
 
 export const blogsRouter = Router({})
 export const deleteAllBlogsRouter = Router({})
@@ -40,7 +41,7 @@ const createAtValidation = body('createAt')
 
 
 blogsRouter.get('/', async (req: Request , res: Response) => {
-  const blogsPromise = blogsRepository.getAllBlogs()
+  const blogsPromise = blogsService.getAllBlogs()
   const blogs = await blogsPromise
     res.status(200).send(blogs)
   })
@@ -51,7 +52,7 @@ descriptionValidation,
 websiteUrlValidation,
 inputValidationMiddleware,
 async (req: Request , res: Response) => {
-  const blogPromise = blogsRepository.createBlog(req.body)
+  const blogPromise = blogsService.createBlog(req.body)
   const blog = await blogPromise
   delete blog._id
   res.status(201).send(blog)
@@ -59,7 +60,7 @@ async (req: Request , res: Response) => {
 
 blogsRouter.get('/:blogId', async (req: Request , res: Response) => {
     const blogId = req.params.blogId
-    const blogPromise  = blogsRepository.findBlog(blogId)
+    const blogPromise  = blogsService.findBlog(blogId)
     const blog = await blogPromise
     if (blog && blogId) res.send(blog)
     else res.status(404).send()
@@ -71,7 +72,7 @@ blogsRouter.get('/:blogId', async (req: Request , res: Response) => {
  websiteUrlValidation,
  inputValidationMiddleware, async (req: Request , res: Response) =>  {
     const blogId = req.params.blogId
-    const isUpdatedPromise = blogsRepository.updateBlog(req.body, blogId)
+    const isUpdatedPromise = blogsService.updateBlog(req.body, blogId)
     const isUpdated = await isUpdatedPromise
     if (isUpdated) res.status(204).send()
     // if(answer?.blog) res.status(204).send()
@@ -84,7 +85,7 @@ blogsRouter.get('/:blogId', async (req: Request , res: Response) => {
   async (req: Request , res: Response) => {
     if(req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') res.status(401).send()
   const blogId = req.params.blogId
-const isDeletedPromise =  blogsRepository.removeBlog(blogId)
+const isDeletedPromise =  blogsService.removeBlog(blogId)
 const isDeleted = await isDeletedPromise
   if(isDeleted)  res.status(204).send()
   else res.status(404).send()
