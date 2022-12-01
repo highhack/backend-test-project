@@ -40,24 +40,13 @@ async createBlog(body: {name: string; description: string; websiteUrl: string}):
 },
 
 async updateBlog(
-    body: {name: string; websiteUrl: string},
+    body: {name: string; websiteUrl: string, description: string},
     blogId: string
     ): Promise<boolean | undefined >{
-        const {name, websiteUrl } = body 
-        // const blog = blogs.find(v => v.id === blogId)
-        const blog = await blogsCollection.findOne({id: blogId})
-        if (blog) {
-          // if(websiteUrl?.length <= 100 && typeof websiteUrl === 'string') {
-           blogsCollection.updateOne({id: blogId}, {$set: {name: name, websiteUrl: websiteUrl}})
-           return true
-        //    return true
-        // }
-       }
-        return false
+         return await blogsRepository.updateBlog( body, blogId)
 
 },
 async removeBlog  (id: string): Promise<boolean | undefined>{
- const result = await blogsCollection.deleteOne({id:id})
-  return result.deletedCount === 1
+ return  await blogsRepository.removeBlog(id)
 }
 }

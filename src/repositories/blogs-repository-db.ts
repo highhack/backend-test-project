@@ -30,37 +30,18 @@ async createBlog(blog: Blog): Promise<Blog>{
 },
 
 async updateBlog(
-    body: {name: string; websiteUrl: string},
+    body: {name: string; websiteUrl: string, description: string},
     blogId: string
     ): Promise<boolean | undefined >{
-        const {name, websiteUrl } = body 
-        // const blog = blogs.find(v => v.id === blogId)
-        const blog = await blogsCollection.findOne({id: blogId})
-        if (blog) {
-          if(websiteUrl?.length <= 100 && typeof websiteUrl === 'string') {
-           blogsCollection.updateOne({id: blogId}, {$set: {name: name, websiteUrl: websiteUrl}})
-           return true
-        }
-        else {
-          return false
-          }
-       }
-      //   if (blog && blogId) {
-      //     if(youtubeUrl?.length <= 100 && typeof youtubeUrl === 'string') {
-      //      blog.name = name
-      //      blog.youtubeUrl = youtubeUrl
-      //      return {blog: blog}
-      //   }
-      //   else {
-      //     const errors: SomeError[] = []
-      //     if (!youtubeUrl ||  youtubeUrl?.length > 100 || typeof youtubeUrl !== 'string' ) errors.push({
-      //       message: "url is not correct",
-      //       field: "youtubeUrl",
-      //     })
-      //     return {errors: errors}
-      //     }
-      //  }
+      const {name, websiteUrl, description } = body 
+      const result = await blogsCollection.updateOne
+      (
+        {id: blogId}, 
+        {$set: {description: description, name: name, websiteUrl: websiteUrl}}
+      )
+      return result.matchedCount === 1
 },
+
 async removeBlog  (id: string): Promise<boolean | undefined>{
  const result = await blogsCollection.deleteOne({id:id})
   return result.deletedCount === 1
