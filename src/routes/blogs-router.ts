@@ -52,8 +52,7 @@ descriptionValidation,
 websiteUrlValidation,
 inputValidationMiddleware,
 async (req: Request , res: Response) => {
-  const blogPromise = blogsService.createBlog(req.body)
-  const blog = await blogPromise
+  const blog = await blogsService.createBlog(req.body)
   delete blog._id
   res.status(201).send(blog)
   })

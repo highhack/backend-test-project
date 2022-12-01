@@ -47,29 +47,14 @@ async updateBlog(
         // const blog = blogs.find(v => v.id === blogId)
         const blog = await blogsCollection.findOne({id: blogId})
         if (blog) {
-          if(websiteUrl?.length <= 100 && typeof websiteUrl === 'string') {
+          // if(websiteUrl?.length <= 100 && typeof websiteUrl === 'string') {
            blogsCollection.updateOne({id: blogId}, {$set: {name: name, websiteUrl: websiteUrl}})
            return true
-        }
-        else {
-          return false
-          }
+        //    return true
+        // }
        }
-      //   if (blog && blogId) {
-      //     if(youtubeUrl?.length <= 100 && typeof youtubeUrl === 'string') {
-      //      blog.name = name
-      //      blog.youtubeUrl = youtubeUrl
-      //      return {blog: blog}
-      //   }
-      //   else {
-      //     const errors: SomeError[] = []
-      //     if (!youtubeUrl ||  youtubeUrl?.length > 100 || typeof youtubeUrl !== 'string' ) errors.push({
-      //       message: "url is not correct",
-      //       field: "youtubeUrl",
-      //     })
-      //     return {errors: errors}
-      //     }
-      //  }
+        return false
+
 },
 async removeBlog  (id: string): Promise<boolean | undefined>{
  const result = await blogsCollection.deleteOne({id:id})
