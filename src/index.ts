@@ -3,9 +3,9 @@ import bodyParser from 'body-parser'
 import { videoRouter } from './routes/videos-router'
 import {  blogsRouter } from './routes/blogs-router'
 import {  postsRouter } from './routes/posts-router'
-import { videosRepository } from './repositories/videos-repository'
-import { blogsRepository } from './repositories/blogs-repository-db'
-import { postsRepository } from './repositories/posts-repository-db'
+import { videosRepository } from './repositories/videos/videos-repository'
+import { blogsRepository } from './repositories/blogs/blogs-repository-db'
+import { postsRepository } from './repositories/posts/posts-repository-db'
 import { runDb } from './repositories/db'
 
 

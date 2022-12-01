@@ -1,7 +1,7 @@
 import { MongoClient } from 'mongodb';
 import * as dotenv from 'dotenv' 
-import { Post } from './posts-repository-db';
-import { Blog } from './blogs-repository-db';
+import { Post } from './posts/posts-repository-db';
+import { Blog } from './blogs/blogs-repository-db';
 dotenv.config()
 
 const mongoUri = process.env.MONGO_URL  || "mongodb://0.0.0.0:27017" 

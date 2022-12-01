@@ -1,8 +1,8 @@
 import  { Router, Request, Response } from "express";
 import { body} from "express-validator";
+import { postsService } from "../domine/posts-service";
 import { inputValidationMiddleware } from "../input-validation-middleware";
-import { blogsRepository } from "../repositories/blogs-repository-db";
-import { postsRepository } from "../repositories/posts-repository-db";
+import { blogsRepository } from "../repositories/blogs/blogs-repository-db";
 
 export const postsRouter = Router({})
 export const deleteAllBlogsRouter = Router({})
@@ -29,7 +29,7 @@ const blogIdValidation = body('blogId')
 
 
 postsRouter.get('/', async (req: Request , res: Response) => {
-  const postsPromise =  postsRepository.getAllPosts()
+  const postsPromise =  postsService.getAllPosts()
   const posts = await postsPromise
     res.status(200).send(posts)
   })
@@ -41,7 +41,7 @@ contentValidation,
 blogIdValidation,
 inputValidationMiddleware,
 async (req: Request , res: Response) => {
-  const postPromise =  postsRepository.createPost(req.body)
+  const postPromise =  postsService.createPost(req.body)
   const post = await postPromise
   delete post._id
   // const blogs = await blogsRepository.getAllBlogs()
@@ -51,7 +51,7 @@ async (req: Request , res: Response) => {
 
 postsRouter.get('/:postId', async (req: Request , res: Response) => {
     const postId = req.params.postId
-    const postPromise = postsRepository.findPost(postId)
+    const postPromise = postsService.findPost(postId)
     const post = await postPromise
     if (post && postId) res.send(post)
     else res.status(404).send()
@@ -66,7 +66,7 @@ postsRouter.get('/:postId', async (req: Request , res: Response) => {
  inputValidationMiddleware,
  async (req: Request , res: Response) => {
     const postId = req.params.postId
-    const answer = await postsRepository.updatePost(req.body, postId)
+    const answer = await postsService.updatePost(req.body, postId)
     if(answer) res.status(204).send()
     // if(answer?.errors) res.status(400).send()
     else res.status(404).send()
@@ -78,7 +78,7 @@ postsRouter.get('/:postId', async (req: Request , res: Response) => {
     // if(req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') res.status(401).send()
   const postId = req.params.postId
   if(postId) {
-    const isDeleted = await postsRepository.removePost(postId)
+    const isDeleted = await postsService.removePost(postId)
     if (isDeleted)  res.status(204).send()
     else res.status(404).send()
   }

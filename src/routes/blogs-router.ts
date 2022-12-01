@@ -69,12 +69,11 @@ blogsRouter.get('/:blogId', async (req: Request , res: Response) => {
  nameValidation,
  descriptionValidation,
  websiteUrlValidation,
- inputValidationMiddleware, async (req: Request , res: Response) =>  {
+ inputValidationMiddleware, 
+ async (req: Request , res: Response) =>  {
     const blogId = req.params.blogId
     const isUpdated = await blogsService.updateBlog(req.body, blogId)
     if (isUpdated) res.status(204).send()
-    // if(answer?.blog) res.status(204).send()
-    // if(answer?.errors) res.status(400).send()
     else res.status(404).send()
     })
     

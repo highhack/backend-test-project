@@ -1,5 +1,5 @@
 import { FindOptions } from "mongodb";
-import {  blogsCollection } from "./db";
+import {  blogsCollection } from "../db";
 
 export interface Blog {
     id: string;
@@ -12,10 +12,12 @@ export interface Blog {
   
 
 export const blogsRepository = {
+  
 async deleteAllBlogs(): Promise<Blog[]> {
   blogsCollection.deleteMany({})
-    return blogsCollection.find({}).toArray()
+  return blogsCollection.find({}).toArray()
 },
+
 async getAllBlogs(): Promise<Blog[]> {
    return blogsCollection.find({ }, { projection: { _id: 0 } }).toArray()
 },

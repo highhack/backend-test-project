@@ -1,4 +1,4 @@
-import { postsCollection } from "./db";
+import { postsCollection } from "../db";
 
 export interface Post {
     id: string;
@@ -50,26 +50,14 @@ updatePost: async (
     postId: string
     ) => {
         const {title, shortDescription, content, blogId} = body 
-        const post = await postsCollection.findOne({id: postId})
-        if (post && postId) {
-          postsCollection.updateOne({id: postId}, {$set: 
+          const result =await postsCollection.updateOne({id: postId}, {$set: 
             {
               title: title, 
               shortDescription: shortDescription, 
               content:content, 
               blogId: blogId,
             }})
-            return true
-
-    //     else {
-    //       const errors = []
-    //       if (!youtubeUrl ||  youtubeUrl?.length > 100 || typeof youtubeUrl !== 'string' ) errors.push({
-    //         "message": "url is not correct",
-    //         "field": "youtubeUrl"
-    //       })
-    //       return {errors: errors}
-    //       }
-       }
+            return result.matchedCount === 1
 },
 
 removePost: async (id: string) => {

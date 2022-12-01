@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { videosRepository } from "../repositories/videos-repository";
+import { videosRepository } from "../repositories/videos/videos-repository";
     
 export const videoRouter = Router({})
 export const deleteAllVideosRouter = Router({})

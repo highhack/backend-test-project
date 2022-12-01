@@ -1,6 +1,4 @@
-import { FindOptions } from "mongodb";
-import { blogsRepository } from "../repositories/blogs-repository-db";
-import { blogsCollection } from "../repositories/db";
+import { blogsRepository } from "../repositories/blogs/blogs-repository-db";
 
 export interface Blog {
     id: string;
@@ -14,8 +12,7 @@ export interface Blog {
 
 export const blogsService = {
 async deleteAllBlogs(): Promise<Blog[]> {
-  blogsCollection.deleteMany({})
-    return blogsCollection.find({}).toArray()
+return blogsRepository.deleteAllBlogs()
 },
 async getAllBlogs(): Promise<Blog[]> {
    return blogsRepository.getAllBlogs()
