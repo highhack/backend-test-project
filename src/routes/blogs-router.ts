@@ -1,4 +1,4 @@
-import  { Router, Request, Response } from "express";
+import  { Router, Request, Response, query } from "express";
 import { body} from "express-validator";
 import { blogsService } from "../domine/blogs-service";
 import { inputValidationMiddleware } from "../input-validation-middleware";
@@ -41,7 +41,9 @@ const createAtValidation = body('createAt')
 
 
 blogsRouter.get('/', async (req: Request , res: Response) => {
-  const blogsPromise = blogsService.getAllBlogs()
+  const {query} = req
+  console.log('queries', query);
+  const blogsPromise = blogsService.getAllBlogs(query)
   const blogs = await blogsPromise
     res.status(200).send(blogs)
   })

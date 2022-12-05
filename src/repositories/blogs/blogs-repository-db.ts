@@ -1,4 +1,5 @@
 import { FindOptions } from "mongodb";
+
 import {  blogsCollection } from "../db";
 
 export interface Blog {
@@ -9,6 +10,16 @@ export interface Blog {
     createdAt: string;
     _id?: string
   }
+
+  
+  export interface BlogQueries {
+    searchNameTerm?: string | null;
+    pageNumber?: string;
+    pageSize?: string;
+    sortBy: string;
+    sortDirection: string
+   } 
+
   
 
 export const blogsRepository = {
@@ -18,12 +29,17 @@ async deleteAllBlogs(): Promise<Blog[]> {
   return blogsCollection.find({}).toArray()
 },
 
-async getAllBlogs(): Promise<Blog[]> {
-   return blogsCollection.find({ }, { projection: { _id: 0 } }).toArray()
+async getAllBlogs(queries: BlogQueries): Promise<Blog[]> {
+  const {  searchNameTerm, pageNumber, pageSize, sortBy, sortDirection} = queries
+  const blogs = await blogsCollection
+  .find({ }, { projection: { _id: 0 } })
+  .sort({[sortBy]: 1})
+  .toArray()
+   return blogs
 },
 
 async findBlog(id: string): Promise<Blog | null> {
-  return  blogsCollection.findOne({id: id}, { projection: { _id: 0 } }) || null
+  return  await blogsCollection.findOne({id: id}, { projection: { _id: 0 } }) || null
 },
 
 async createBlog(blog: Blog): Promise<Blog>{
