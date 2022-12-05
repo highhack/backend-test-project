@@ -1,5 +1,3 @@
-import { FindOptions } from "mongodb";
-
 import {  blogsCollection } from "../db";
 
 export interface Blog {
@@ -13,9 +11,9 @@ export interface Blog {
 
   
   export interface BlogQueries {
-    searchNameTerm?: string | null;
-    pageNumber?: string;
-    pageSize?: string;
+    searchNameTerm: string | null;
+    pageNumber: number;
+    pageSize: number;
     sortBy: string;
     sortDirection: 1 | -1
    } 
@@ -32,10 +30,12 @@ async deleteAllBlogs(): Promise<Blog[]> {
 async getAllBlogs(queries: BlogQueries): Promise<Blog[]> {
   const {  searchNameTerm, pageNumber, pageSize, sortBy, sortDirection} = queries
   const blogs = await blogsCollection
-  .find({ }, { projection: { _id: 0 } })
+  .find(searchNameTerm ? {name: searchNameTerm } : { }, { projection: { _id: 0 } })
   .sort({[sortBy]: sortDirection})
+  .skip((pageNumber - 1) * pageSize )
+  .limit(pageSize)
   .toArray()
-   return blogs
+  return blogs
 },
 
 async findBlog(id: string): Promise<Blog | null> {
