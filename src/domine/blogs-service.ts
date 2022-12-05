@@ -10,7 +10,7 @@ export interface Blog {
 }
 
  export interface BlogQueries {
-  searchNameTerm: string | null;
+  searchNameTerm?: string | null;
   pageNumber?: string;
   pageSize?: string;
   sortBy?: string;
