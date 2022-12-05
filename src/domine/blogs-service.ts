@@ -15,12 +15,13 @@ export interface Blog {
   pageSize?: string;
   sortBy?: string;
   sortDirection?: 'asc' | 'desc'
- } 
+} 
 
  function sortByDirection (str: 'asc' | 'desc' | undefined) {
-  if (str === 'desc') return '-1' 
-  if (str === 'asc') return '1' 
-  return  '1'}
+  if (str === 'desc') return -1
+  if (str === 'asc') return 1 
+  return  1
+}
   
 
 export const blogsService = {
@@ -37,7 +38,7 @@ async getAllBlogs(queries: BlogQueries): Promise<Blog[]> {
     pageNumber: pageNumber || '1',
     pageSize: pageSize || '1',
     sortBy: sortBy || 'createdAt',
-    sortDirection: sortByDirection(sortDirection)
+    sortDirection: sortByDirection(sortDirection) as 1 | -1
     } 
    return blogsRepository.getAllBlogs(createdQueries)
 },

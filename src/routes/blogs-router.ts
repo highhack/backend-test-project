@@ -42,7 +42,6 @@ const createAtValidation = body('createAt')
 
 blogsRouter.get('/', async (req: Request , res: Response) => {
   const {query} = req
-  console.log('queries', query);
   const blogsPromise = blogsService.getAllBlogs(query)
   const blogs = await blogsPromise
     res.status(200).send(blogs)

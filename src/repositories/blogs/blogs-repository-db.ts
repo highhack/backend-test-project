@@ -17,7 +17,7 @@ export interface Blog {
     pageNumber?: string;
     pageSize?: string;
     sortBy: string;
-    sortDirection: string
+    sortDirection: 1 | -1
    } 
 
   
@@ -33,7 +33,7 @@ async getAllBlogs(queries: BlogQueries): Promise<Blog[]> {
   const {  searchNameTerm, pageNumber, pageSize, sortBy, sortDirection} = queries
   const blogs = await blogsCollection
   .find({ }, { projection: { _id: 0 } })
-  .sort({[sortBy]: 1})
+  .sort({[sortBy]: sortDirection})
   .toArray()
    return blogs
 },
