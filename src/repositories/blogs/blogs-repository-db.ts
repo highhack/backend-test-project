@@ -52,8 +52,7 @@ async updateBlog(
     blogId: string
     ): Promise<boolean | undefined >{
       const {name, websiteUrl, description } = body 
-      const result = await blogsCollection.updateOne
-      (
+      const result = await blogsCollection.updateOne(
         {id: blogId}, 
         {$set: {description: description, name: name, websiteUrl: websiteUrl}}
       )
