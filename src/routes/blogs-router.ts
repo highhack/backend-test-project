@@ -43,8 +43,8 @@ const createAtValidation = body('createAt')
 blogsRouter.get('/', async (req: Request , res: Response) => {
   const {query} = req
   const blogsPromise = blogsService.getAllBlogs(query)
-  const blogs = await blogsPromise
-    res.status(200).send(blogs)
+  const blogsData = await blogsPromise
+    res.status(200).send(blogsData)
   })
 
 blogsRouter.post('/', 
@@ -57,6 +57,15 @@ async (req: Request , res: Response) => {
   delete blog._id
   res.status(201).send(blog)
   })
+
+blogsRouter.get('/:blogId/posts', async (req: Request , res: Response) => {
+   const {query} = req
+    const blogId = req.params.blogId
+    const blogPromise  = blogsService.findPostsByBlogId(blogId, query)
+    const blog = await blogPromise
+    if (blog && blogId) res.send(blog)
+    else res.status(404).send()
+  })  
 
 blogsRouter.get('/:blogId', async (req: Request , res: Response) => {
     const blogId = req.params.blogId

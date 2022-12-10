@@ -42,7 +42,16 @@ async createPost(body: {title: string, shortDescription: string, content: string
 
  findPost: async (id: string) => {
  return await postsCollection.findOne({id: id}, { projection: { _id: 0 } }) || undefined
+},
 
+ findPostsByBlogID: async (blogId: string, queries?: any) =>  {
+  const {pageNumber, pageSize, sortBy, sortDirection} = queries
+  const posts = await postsCollection.find({blogId: blogId}, { projection: { _id: 0 } })
+  .sort({[sortBy]: sortDirection})
+  .skip((pageNumber - 1) * pageSize )
+  .limit(pageSize)
+  .toArray() || null
+  return posts
 },
 
 updatePost: async (

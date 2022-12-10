@@ -1,4 +1,5 @@
 import { blogsRepository } from "../repositories/blogs/blogs-repository-db";
+import { Post, postsRepository } from "../repositories/posts/posts-repository-db";
 
 export interface Blog {
   id: string;
@@ -7,6 +8,14 @@ export interface Blog {
   websiteUrl: string;
   createdAt: string;
   _id?: string
+}
+
+export interface BlogsData {
+  pagesCount: number,
+  page: number,
+  pageSize: number,
+  totalCount: number,
+  items: Blog[]
 }
 
  export interface BlogQueries {
@@ -30,8 +39,9 @@ export const blogsService = {
  return blogsRepository.deleteAllBlogs()
  },
 
- async getAllBlogs(queries: BlogQueries): Promise<Blog[]> {
+ async getAllBlogs(queries: BlogQueries): Promise<BlogsData> {
   const {searchNameTerm, pageNumber, pageSize, sortBy, sortDirection } = queries
+  const totalCount = await blogsRepository.getTotalCount()
   const createdQueries = {
     searchNameTerm: searchNameTerm || null,
     pageNumber: Number(pageNumber) || 1,
@@ -39,10 +49,28 @@ export const blogsService = {
     sortBy: sortBy || 'createdAt',
     sortDirection: sortByDirection(sortDirection) as 1 | -1
     } 
-   return blogsRepository.getAllBlogs(createdQueries)
+  const blogs = await blogsRepository.getAllBlogs(createdQueries)
+   return {
+    pagesCount: totalCount/Number(pageSize),
+    page: Number(pageNumber) || 1,
+    pageSize: Number(pageSize) || 10,
+    totalCount: totalCount,
+    items: blogs
+  }
  },
 
- async findBlog(id: string): Promise<Blog | null> {
+ async findPostsByBlogId(id: string, queries?: any): Promise<Post[] | null> {
+  const {pageNumber, pageSize, sortBy, sortDirection} = queries
+  const createdQueries = {
+    pageNumber: Number(pageNumber) || 1,
+    pageSize: Number(pageSize) || 10,
+    sortBy: sortBy || 'createdAt',
+    sortDirection: sortByDirection(sortDirection) as 1 | -1
+    } 
+    return postsRepository.findPostsByBlogID(id, createdQueries)
+  },
+
+  async findBlog(id: string): Promise<Blog | null> {
     return blogsRepository.findBlog(id)
   },
 
