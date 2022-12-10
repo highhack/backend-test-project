@@ -1,6 +1,7 @@
 import  { Router, Request, Response, query } from "express";
 import { body} from "express-validator";
 import { blogsService } from "../domine/blogs-service";
+import { postsService } from "../domine/posts-service";
 import { inputValidationMiddleware } from "../input-validation-middleware";
 // import { Blog, blogsService } from "../repositories/blogs-repository-db";
 
@@ -58,6 +59,18 @@ async (req: Request , res: Response) => {
   res.status(201).send(blog)
   }) 
 
+blogsRouter.post('/:blogId/posts', 
+nameValidation,
+descriptionValidation,
+websiteUrlValidation,
+inputValidationMiddleware,
+async (req: Request , res: Response) => {
+  const blogId = req.params.blogId
+  const post = await postsService.createPostByBlogId(req.body, blogId)
+  // delete post._id
+  res.status(201).send(post)
+  }) 
+
 blogsRouter.get('/:blogId', async (req: Request , res: Response) => {
     const blogId = req.params.blogId
     const blogPromise  = blogsService.findBlog(blogId)
@@ -66,7 +79,7 @@ blogsRouter.get('/:blogId', async (req: Request , res: Response) => {
     else res.status(404).send()
   })
 
-  blogsRouter.get('/:blogId/posts', async (req: Request , res: Response) => {
+blogsRouter.get('/:blogId/posts', async (req: Request , res: Response) => {
     const {query} = req
      const blogId = req.params.blogId
      const blogPromise  = blogsService.findPostsByBlogId(blogId, query)

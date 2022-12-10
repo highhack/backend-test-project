@@ -44,6 +44,22 @@ async createPost(body: {title: string, shortDescription: string, content: string
       return post
 },
 
+async createPostByBlogId(body: {title: string, shortDescription: string, content: string}, blogId: string): Promise<Post> {
+
+    const {title, shortDescription, content} = body 
+      const post = {
+        "id": new Date().getTime().toString(),
+        "title": title,
+        "shortDescription": shortDescription,
+        "content": content,
+        "blogId": blogId,
+        "blogName": 'blogName',
+        "createdAt": new Date().toISOString(),
+      }
+      await postsRepository.createPost(post)
+      return post
+},
+
 updatePost: async (
     body: {title: string, shortDescription: string, content: string, blogId: string},
     postId: string
