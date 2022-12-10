@@ -36,6 +36,7 @@ const createAtValidation = body('createAt')
 .withMessage('date is not correct')
 .isLength({min: 1, max: 500})
 .withMessage('length is from 0 to 100')
+
 const titleValidation = body('title')
 .isString()
 .trim()
@@ -52,7 +53,7 @@ const shortDescriptionValidation = body('shortDescription')
 .isString()
 .withMessage(`not string`)
 .trim()
-.isLength({min: 1, max: 500})
+.isLength({min: 1, max: 100})
 .withMessage('length is from 0 to 100')
 
 
@@ -78,9 +79,9 @@ async (req: Request , res: Response) => {
   }) 
 
 blogsRouter.post('/:blogId/posts', 
-titleValidation,
-shortDescriptionValidation,
-contentValidation,
+// titleValidation,
+// shortDescriptionValidation,
+// contentValidation,
 inputValidationMiddleware,
 async (req: Request , res: Response) => {
   const blogId = req.params.blogId
