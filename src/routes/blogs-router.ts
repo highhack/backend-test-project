@@ -104,10 +104,12 @@ blogsRouter.get('/:blogId', async (req: Request , res: Response) => {
 blogsRouter.get('/:blogId/posts', async (req: Request , res: Response) => {
     const {query} = req
      const blogId = req.params.blogId
-     const blogPromise  = blogsService.findPostsByBlogId(blogId, query)
-     const blog = await blogPromise
-     if (blog && blogId) res.send(blog)
-     else res.status(404).send()
+     const blog = await blogsService.findBlog(blogId)
+     if (!blog)  res.status(404).send()
+     const postsPromise  = blogsService.findPostsByBlogId(blogId, query)
+     const posts = await postsPromise
+     if (posts) res.send(blog)
+     return res.status(404).send()
    })   
 
  blogsRouter.put('/:blogId',
