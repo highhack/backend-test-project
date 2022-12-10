@@ -79,7 +79,7 @@ async (req: Request , res: Response) => {
   }) 
 
 blogsRouter.post('/:blogId/posts', 
-// titleValidation,
+titleValidation,
 // shortDescriptionValidation,
 // contentValidation,
 inputValidationMiddleware,
