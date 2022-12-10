@@ -29,7 +29,8 @@ const blogIdValidation = body('blogId')
 
 
 postsRouter.get('/', async (req: Request , res: Response) => {
-  const postsPromise =  postsService.getAllPosts()
+  const {query} = req
+  const postsPromise =  postsService.getAllPosts(query)
   const posts = await postsPromise
     res.status(200).send(posts)
   })

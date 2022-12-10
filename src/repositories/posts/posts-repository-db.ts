@@ -11,6 +11,14 @@ export interface Post {
     _id?: string;
   }
 
+  export interface PostQueries {
+    searchNameTerm: string | null;
+    pageNumber: number;
+    pageSize: number;
+    sortBy: string;
+    sortDirection: 1 | -1
+   }
+
 
 
 
@@ -20,12 +28,20 @@ async deleteAllPosts(): Promise<Post[]> {
     return postsCollection.find({}).toArray() || 0
 },
 
-async getTotalCount(id: string): Promise<number> {
+async getTotalCount(id?: string): Promise<number> {
   return await postsCollection.find({blogId: id}).count()
  },
 
-async getAllPosts(): Promise<Post[]> {
-  return postsCollection.find({}, { projection: { _id: 0 } }).toArray()
+async getAllPosts(queries: PostQueries): Promise<Post[]> {
+  const {  searchNameTerm, pageNumber, pageSize, sortBy, sortDirection} = queries
+  const posts = await postsCollection
+   .find( {}, { projection: { _id: 0 } })
+  // .find(searchNameTerm ? { $text: { $search: searchNameTerm } }: { }, { projection: { _id: 0 } })
+  .sort({[sortBy]: sortDirection})
+  .skip((pageNumber - 1) * pageSize )
+  .limit(pageSize)
+  .toArray()
+  return posts
 },
 
 async createPost(body: {title: string, shortDescription: string, content: string, blogId: string}): Promise<Post> {
