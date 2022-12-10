@@ -86,11 +86,10 @@ inputValidationMiddleware,
 async (req: Request , res: Response) => {
   const blogId = req.params.blogId
   const blog = await blogsService.findBlog(blogId)
-  if (blog) {
-    const post = await postsService.createPostByBlogId(req.body, blogId)
-    // delete post._id
-    res.status(201).send(post)}
-  res.status(404).send()
+  if (!blog)  return res.status(404).send()
+  const post = await postsService.createPostByBlogId(req.body, blogId)
+  // delete post._id
+  return res.status(201).send(post)
   }) 
 
 blogsRouter.get('/:blogId', async (req: Request , res: Response) => {
@@ -105,7 +104,7 @@ blogsRouter.get('/:blogId/posts', async (req: Request , res: Response) => {
     const {query} = req
      const blogId = req.params.blogId
      const blog = await blogsService.findBlog(blogId)
-     if (!blog)  res.status(404).send()
+     if (!blog)  return res.status(404).send()
      const postsPromise  = blogsService.findPostsByBlogId(blogId, query)
      const posts = await postsPromise
      if (posts) res.send(blog)
