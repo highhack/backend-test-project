@@ -28,8 +28,8 @@ export interface Post {
   } 
 
   function sortByDirection (str: 'asc' | 'desc' | undefined) {
-    if (str === 'desc') return -1
-    if (str === 'asc') return 1 
+    if (str === 'desc') return 1
+    if (str === 'asc') return -1 
     return  -1
   }
 

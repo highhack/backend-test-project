@@ -28,7 +28,7 @@ async deleteAllBlogs(): Promise<Blog[]> {
 },
 
 async getTotalCount(filter?: any): Promise<number> {
- return  await blogsCollection.find(filter || {}).count()
+ return  await blogsCollection.find({}).count()
 },
 
 async getAllBlogs(queries: BlogQueries): Promise<Blog[]> {
@@ -36,12 +36,11 @@ async getAllBlogs(queries: BlogQueries): Promise<Blog[]> {
   const blogs = await blogsCollection
   //  .find( {}, { projection: { _id: 0 } })
   // .find(searchNameTerm ? {$text: {$search: searchNameTerm}}: { }, { projection: { _id: 0 } })
-  .find(searchNameTerm ? {name: {$regex: searchNameTerm, "$options": '1'}}: { }, { projection: { _id: 0 } })
+  .find(searchNameTerm ? {name: {$regex: searchNameTerm, "$options": '1'}} : { }, { projection: { _id: 0 } })
   .sort({[sortBy]: sortDirection})
   .skip((pageNumber - 1) * pageSize )
   .limit(pageSize)
   .toArray()
-  console.log('blogs',  blogs)
   return blogs
 },
 
