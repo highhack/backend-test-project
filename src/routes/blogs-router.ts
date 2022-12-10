@@ -85,9 +85,12 @@ blogsRouter.post('/:blogId/posts',
 inputValidationMiddleware,
 async (req: Request , res: Response) => {
   const blogId = req.params.blogId
-  const post = await postsService.createPostByBlogId(req.body, blogId)
-  // delete post._id
-  res.status(201).send(post)
+  const blog = await blogsService.findBlog(blogId)
+  if (blog) {
+    const post = await postsService.createPostByBlogId(req.body, blogId)
+    // delete post._id
+    res.status(201).send(post)}
+  res.status(404).send()
   }) 
 
 blogsRouter.get('/:blogId', async (req: Request , res: Response) => {
