@@ -17,8 +17,12 @@ export interface Post {
 export const postsRepository = {
 async deleteAllPosts(): Promise<Post[]> {
    postsCollection.deleteMany({})
-    return postsCollection.find({}).toArray()
+    return postsCollection.find({}).toArray() || 0
 },
+
+async getTotalCount(id: string): Promise<number> {
+  return  await postsCollection.find({id: id}).count() || 0
+ },
 
 async getAllPosts(): Promise<Post[]> {
   return postsCollection.find({}, { projection: { _id: 0 } }).toArray()

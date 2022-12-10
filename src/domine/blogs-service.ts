@@ -17,6 +17,15 @@ export interface BlogsData {
   totalCount: number,
   items: Blog[]
 }
+export interface PostsData {
+  pagesCount: number,
+  page: number,
+  pageSize: number,
+  totalCount: number,
+  items: Post[]
+}
+
+
 
  export interface BlogQueries {
   searchNameTerm?: string | null;
@@ -59,15 +68,23 @@ export const blogsService = {
   }
  },
 
- async findPostsByBlogId(id: string, queries?: any): Promise<Post[] | null> {
+ async findPostsByBlogId(id: string, queries?: any): Promise<PostsData | null> {
   const {pageNumber, pageSize, sortBy, sortDirection} = queries
+  const totalCount = await postsRepository.getTotalCount(id)
   const createdQueries = {
     pageNumber: Number(pageNumber) || 1,
     pageSize: Number(pageSize) || 10,
     sortBy: sortBy || 'createdAt',
     sortDirection: sortByDirection(sortDirection) as 1 | -1
     } 
-    return postsRepository.findPostsByBlogID(id, createdQueries)
+    const posts = await postsRepository.findPostsByBlogID(id, createdQueries)
+    return  {
+      pagesCount: Math.ceil(totalCount/Number(pageSize || 10)),
+      page: Number(pageNumber) || 1,
+      pageSize: Number(pageSize) || 10,
+      totalCount: totalCount,
+      items: posts
+    } 
   },
 
   async findBlog(id: string): Promise<Blog | null> {
