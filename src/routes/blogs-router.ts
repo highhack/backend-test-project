@@ -106,8 +106,8 @@ blogsRouter.get('/:blogId/posts', async (req: Request , res: Response) => {
      const blog = await blogsService.findBlog(blogId)
      if (!blog)  return res.status(404).send()
      const postsPromise  = blogsService.findPostsByBlogId(blogId, query)
-     const posts = await postsPromise
-     if (posts) res.send(blog)
+     const postsData = await postsPromise
+     if (postsData) res.status(200).send(postsData)
      return res.status(404).send()
    })   
 
