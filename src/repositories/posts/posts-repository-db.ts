@@ -21,7 +21,7 @@ async deleteAllPosts(): Promise<Post[]> {
 },
 
 async getTotalCount(id: string): Promise<number> {
-  return  await postsCollection.find({id: id}).count() || 0
+  return  await postsCollection.find({id: id}).count()
  },
 
 async getAllPosts(): Promise<Post[]> {
