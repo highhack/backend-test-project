@@ -70,7 +70,7 @@ export const blogsService = {
 
  async findPostsByBlogId(id: string, queries?: any): Promise<PostsData | null> {
   const {pageNumber, pageSize, sortBy, sortDirection} = queries
-  const totalCount = await postsRepository.getTotalCount(id)
+  const postsTotalCount = await postsRepository.getTotalCount(id)
   const createdQueries = {
     pageNumber: Number(pageNumber) || 1,
     pageSize: Number(pageSize) || 10,
@@ -79,10 +79,10 @@ export const blogsService = {
     } 
     const posts = await postsRepository.findPostsByBlogID(id, createdQueries)
     return  {
-      pagesCount: Math.ceil(totalCount/Number(pageSize || 10)),
+      pagesCount: Math.ceil(postsTotalCount/Number(pageSize || 10)),
       page: Number(pageNumber) || 1,
       pageSize: Number(pageSize) || 10,
-      totalCount: totalCount,
+      totalCount: postsTotalCount,
       items: posts
     } 
   },
