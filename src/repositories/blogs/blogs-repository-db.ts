@@ -27,8 +27,8 @@ async deleteAllBlogs(): Promise<Blog[]> {
   return blogsCollection.find({}).toArray()
 },
 
-async getTotalCount(): Promise<number> {
- return  await blogsCollection.find({}).count()
+async getTotalCount(filter?: any): Promise<number> {
+ return  await blogsCollection.find(filter || {}).count()
 },
 
 async getAllBlogs(queries: BlogQueries): Promise<Blog[]> {

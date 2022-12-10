@@ -1,4 +1,3 @@
-import { postsCollection } from "../repositories/db";
 import { postsRepository } from "../repositories/posts/posts-repository-db";
 
 export interface Post {
@@ -31,7 +30,7 @@ export interface Post {
   function sortByDirection (str: 'asc' | 'desc' | undefined) {
     if (str === 'desc') return -1
     if (str === 'asc') return 1 
-    return  -1
+    return  1
   }
 
 
@@ -43,6 +42,8 @@ return await postsRepository.deleteAllPosts()
 
 async getAllPosts(queries: PostQueries): Promise<PostsData> {
   const {searchNameTerm, pageNumber, pageSize, sortBy, sortDirection } = queries
+  // const filter: any = {}
+  // filter.name = {$regex: searchNameTerm, "$options": '1'}
   const totalCount = await postsRepository.getTotalCount()
   const createdQueries = {
     searchNameTerm: searchNameTerm || null,
