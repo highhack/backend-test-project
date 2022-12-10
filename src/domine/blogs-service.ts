@@ -51,7 +51,7 @@ export const blogsService = {
     } 
   const blogs = await blogsRepository.getAllBlogs(createdQueries)
    return {
-    pagesCount: totalCount/Number(pageSize),
+    pagesCount: Math.ceil(totalCount/Number(pageSize || 10)),
     page: Number(pageNumber) || 1,
     pageSize: Number(pageSize) || 10,
     totalCount: totalCount,

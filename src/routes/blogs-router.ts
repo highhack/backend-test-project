@@ -56,16 +56,7 @@ async (req: Request , res: Response) => {
   const blog = await blogsService.createBlog(req.body)
   delete blog._id
   res.status(201).send(blog)
-  })
-
-blogsRouter.get('/:blogId/posts', async (req: Request , res: Response) => {
-   const {query} = req
-    const blogId = req.params.blogId
-    const blogPromise  = blogsService.findPostsByBlogId(blogId, query)
-    const blog = await blogPromise
-    if (blog && blogId) res.send(blog)
-    else res.status(404).send()
-  })  
+  }) 
 
 blogsRouter.get('/:blogId', async (req: Request , res: Response) => {
     const blogId = req.params.blogId
@@ -74,6 +65,15 @@ blogsRouter.get('/:blogId', async (req: Request , res: Response) => {
     if (blog && blogId) res.send(blog)
     else res.status(404).send()
   })
+
+  blogsRouter.get('/:blogId/posts', async (req: Request , res: Response) => {
+    const {query} = req
+     const blogId = req.params.blogId
+     const blogPromise  = blogsService.findPostsByBlogId(blogId, query)
+     const blog = await blogPromise
+     if (blog && blogId) res.send(blog)
+     else res.status(404).send()
+   })   
 
  blogsRouter.put('/:blogId',
  nameValidation,
