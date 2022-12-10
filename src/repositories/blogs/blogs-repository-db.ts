@@ -40,6 +40,7 @@ async getAllBlogs(queries: BlogQueries): Promise<Blog[]> {
   // .skip((pageNumber - 1) * pageSize )
   // .limit(pageSize)
   .toArray()
+  console.log('blogs',  blogs)
   return blogs
 },
 
