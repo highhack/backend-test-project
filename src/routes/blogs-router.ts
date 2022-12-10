@@ -80,8 +80,8 @@ async (req: Request , res: Response) => {
 
 blogsRouter.post('/:blogId/posts', 
 titleValidation,
-// shortDescriptionValidation,
-// contentValidation,
+shortDescriptionValidation,
+contentValidation,
 inputValidationMiddleware,
 async (req: Request , res: Response) => {
   const blogId = req.params.blogId
