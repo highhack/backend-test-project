@@ -35,7 +35,7 @@ async getAllBlogs(queries: BlogQueries): Promise<Blog[]> {
   const {  searchNameTerm, pageNumber, pageSize, sortBy, sortDirection} = queries
   const blogs = await blogsCollection
   //  .find( {}, { projection: { _id: 0 } })
-  .find(searchNameTerm ? { name: { $search: searchNameTerm } }: { }, { projection: { _id: 0 } })
+  .find(searchNameTerm ? {$text: {$search: searchNameTerm}}: { }, { projection: { _id: 0 } })
   .sort({[sortBy]: sortDirection})
   .skip((pageNumber - 1) * pageSize )
   .limit(pageSize)
