@@ -50,9 +50,7 @@ export const blogsService = {
 
  async getAllBlogs(queries: BlogQueries): Promise<BlogsData> {
   const {searchNameTerm, pageNumber, pageSize, sortBy, sortDirection } = queries
-  const filter: any = {}
-  filter.name = {$regex: searchNameTerm, "$options": '1'}
-  const totalCount = await blogsRepository.getTotalCount(filter)
+  const totalCount = await blogsRepository.getTotalCount(searchNameTerm)
   const createdQueries = {
     searchNameTerm: searchNameTerm || null,
     pageNumber: Number(pageNumber) || 1,
