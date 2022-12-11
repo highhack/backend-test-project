@@ -36,16 +36,16 @@ async getTotalCount(searchNameTerm:  string | null | undefined): Promise<number>
 
 async getAllBlogs(queries: BlogQueries): Promise<Blog[]> {
   const {  searchNameTerm, pageNumber, pageSize, sortBy, sortDirection} = queries
-  // if (searchNameTerm ) {
-  //   const blogs = await blogsCollection
-  // // .find(searchNameTerm ? {$text: {$search: searchNameTerm}}: { }, { projection: { _id: 0 } })
-  // .find({name: {$regex: searchNameTerm || '', "$options": '1'}} , { projection: { _id: 0 } })
-  // .sort({[sortBy]: sortDirection})
-  // .skip((pageNumber - 1) * pageSize )
-  // .limit(pageSize)
-  // .toArray()
-  // return blogs
-  // }
+  if (searchNameTerm ) {
+    const blogs = await blogsCollection
+  // .find(searchNameTerm ? {$text: {$search: searchNameTerm}}: { }, { projection: { _id: 0 } })
+  .find({name: {$regex: searchNameTerm || '', "$options": '1'}} , { projection: { _id: 0 } })
+  .sort({[sortBy]: sortDirection})
+  .skip((pageNumber - 1) * pageSize )
+  .limit(pageSize)
+  .toArray()
+  return blogs
+  }
   const blogs = await blogsCollection
   .find( {}, { projection: { _id: 0 } })
   .sort({[sortBy]: sortDirection})
