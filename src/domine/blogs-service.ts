@@ -35,7 +35,7 @@ export interface PostsData {
   sortDirection?: 'asc' | 'desc'
 } 
 
- function sortByDirection (str: 'asc' | 'desc' | undefined) {
+ function sortByDirection (str: string | undefined) {
   if (str === 'desc') return -1
   if (str === 'asc') return 1 
   return  -1
@@ -56,7 +56,7 @@ export const blogsService = {
     pageNumber: Number(pageNumber) || 1,
     pageSize: Number(pageSize) || 10,
     sortBy: sortBy || 'createdAt',
-    sortDirection: sortByDirection(sortDirection) as (1 | -1)
+    sortDirection: sortByDirection(sortDirection) as (-1 | 1)
     } 
   const blogs = await blogsRepository.getAllBlogs(createdQueries)
    return {
