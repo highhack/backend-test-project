@@ -24,7 +24,7 @@ export interface Post {
     pageNumber?: string;
     pageSize?: string;
     sortBy?: string;
-    sortDirection?: 'asc' | 'desc'
+    sortDirection?: string | undefined
   } 
 
   function sortByDirection (str: string |  undefined) {
