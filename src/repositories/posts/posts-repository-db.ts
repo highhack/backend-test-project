@@ -35,7 +35,7 @@ async getTotalCount(id?: string): Promise<number> {
 async getAllPosts(queries: PostQueries): Promise<Post[]> {
   const {  searchNameTerm, pageNumber, pageSize, sortBy, sortDirection} = queries
   const posts = await postsCollection
-   .find( { }, { projection: { _id: 0 } })
+   .find( {}, { projection: { _id: 0 } })
   // .find(searchNameTerm ? { $text: { $search: searchNameTerm } }: { }, { projection: { _id: 0 } })
   // .find(searchNameTerm ? {name: {$regex: searchNameTerm, "$options": '1'}}: { }, { projection: { _id: 0 } })
   .sort({[sortBy]: sortDirection})
