@@ -56,7 +56,7 @@ export const blogsService = {
     pageNumber: Number(pageNumber) || 1,
     pageSize: Number(pageSize) || 10,
     sortBy: sortBy || 'createdAt',
-    sortDirection: sortByDirection(sortDirection) as (-1 | 1)
+    sortDirection: sortByDirection(sortDirection) as (1 | -1)
     } 
   const blogs = await blogsRepository.getAllBlogs(createdQueries)
    return {

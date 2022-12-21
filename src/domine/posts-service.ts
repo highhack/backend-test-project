@@ -27,7 +27,7 @@ export interface Post {
     sortDirection?: 'asc' | 'desc'
   } 
 
-  function sortByDirection (str: string | undefined) {
+  function sortByDirection (str: string |  undefined) {
     if (str === 'desc') return -1
     if (str === 'asc') return 1 
     return  -1
