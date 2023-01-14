@@ -46,10 +46,10 @@ async getAllPosts(queries: PostQueries): Promise<PostsData> {
   // filter.name = {$regex: searchNameTerm, "$options": '1'}
   const totalCount = await postsRepository.getTotalCount()
   const createdQueries = {
+    sortBy: sortBy || 'createdAt',
     searchNameTerm: searchNameTerm || null,
     pageNumber: Number(pageNumber) || 1,
     pageSize: Number(pageSize) || 10,
-    sortBy: sortBy || 'createdAt',
     sortDirection: sortByDirection(sortDirection) as 1 | -1
     } 
   const blogs = await postsRepository.getAllPosts(createdQueries)
