@@ -100,6 +100,7 @@ export const blogsService = {
         "description": description,
         "websiteUrl": websiteUrl,
         "createdAt": new Date().toISOString(),
+        "isMembership": true,
       }
     const createdBlog = blogsRepository.createBlog(blog)
       return createdBlog

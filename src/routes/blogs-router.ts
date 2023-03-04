@@ -78,19 +78,21 @@ async (req: Request , res: Response) => {
   res.status(201).send(blog)
   }) 
 
-blogsRouter.post('/:blogId/posts', 
-titleValidation,
-shortDescriptionValidation,
-contentValidation,
-inputValidationMiddleware,
-async (req: Request , res: Response) => {
-  const blogId = req.params.blogId
-  const blog = await blogsService.findBlog(blogId)
-  if (!blog)  return res.status(404).send()
-  const post = await postsService.createPostByBlogId(req.body, blogId)
-  // delete post._id
-  return res.status(201).send(post)
-  }) 
+blogsRouter.post(
+  "/:blogId/posts",
+  titleValidation,
+  shortDescriptionValidation,
+  contentValidation,
+  inputValidationMiddleware,
+  async (req: Request, res: Response) => {
+    const blogId = req.params.blogId;
+    const blog = await blogsService.findBlog(blogId);
+    if (!blog) return res.status(404).send();
+    const post = await postsService.createPostByBlogId(req.body, blogId);
+    // delete post._id
+    return res.status(201).send(post);
+  }
+); 
 
 blogsRouter.get('/:blogId', async (req: Request , res: Response) => {
     const blogId = req.params.blogId

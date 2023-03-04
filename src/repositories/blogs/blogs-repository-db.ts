@@ -21,63 +21,71 @@ export interface Blog {
   
 
 export const blogsRepository = {
-  
-async deleteAllBlogs(): Promise<Blog[]> {
-  blogsCollection.deleteMany({})
-  return blogsCollection.find({}).toArray()
-},
+  async deleteAllBlogs(): Promise<Blog[]> {
+    blogsCollection.deleteMany({});
+    return blogsCollection.find({}).toArray();
+  },
 
-async getTotalCount(searchNameTerm:  string | null | undefined): Promise<number> {
-  const filter: any = {}
-  filter.name = {$regex: searchNameTerm, "$options": 'i'}
- if (searchNameTerm) return  await blogsCollection.find(filter).count()
- return  await blogsCollection.find({}).count()
-},
+  async getTotalCount(
+    searchNameTerm: string | null | undefined
+  ): Promise<number> {
+    const filter: any = {};
+    filter.name = { $regex: searchNameTerm, $options: "i" };
+    if (searchNameTerm) return await blogsCollection.find(filter).count();
+    return await blogsCollection.find({}).count();
+  },
 
-async getAllBlogs(queries: BlogQueries): Promise<Blog[]> {
-  const {  searchNameTerm, pageNumber, pageSize, sortBy, sortDirection} = queries
-  if (searchNameTerm ) {
+  async getAllBlogs(queries: BlogQueries): Promise<Blog[]> {
+    const { searchNameTerm, pageNumber, pageSize, sortBy, sortDirection } =
+      queries;
+    if (searchNameTerm) {
+      const blogs = await blogsCollection
+        // .find(searchNameTerm ? {$text: {$search: searchNameTerm}}: { }, { projection: { _id: 0 } })
+        .find(
+          { name: { $regex: searchNameTerm || "", $options: "i" } },
+          { projection: { _id: 0 } }
+        )
+        .sort({ [sortBy]: sortDirection })
+        .skip((pageNumber - 1) * pageSize)
+        .limit(pageSize)
+        .toArray();
+      return blogs;
+    }
     const blogs = await blogsCollection
-  // .find(searchNameTerm ? {$text: {$search: searchNameTerm}}: { }, { projection: { _id: 0 } })
-  .find({name: {$regex: searchNameTerm || '', "$options": 'i'}} , { projection: { _id: 0 } })
-  .sort({[sortBy]: sortDirection})
-  .skip((pageNumber - 1) * pageSize )
-  .limit(pageSize)
-  .toArray()
-  return blogs
-  }
-  const blogs = await blogsCollection
-  .find( {}, { projection: { _id: 0 } })
-  .sort({[sortBy]: sortDirection})
-  .skip((pageNumber - 1) * pageSize )
-  .limit(pageSize)
-  .toArray()
-  return blogs
-},
+      .find({}, { projection: { _id: 0 } })
+      .sort({ [sortBy]: sortDirection })
+      .skip((pageNumber - 1) * pageSize)
+      .limit(pageSize)
+      .toArray();
+    return blogs;
+  },
 
-async findBlog(id: string): Promise<Blog | null> {
-  return  await blogsCollection.findOne({id: id}, { projection: { _id: 0 } }) || null
-},
+  async findBlog(id: string): Promise<Blog | null> {
+    return (
+      (await blogsCollection.findOne({ id: id }, { projection: { _id: 0 } })) ||
+      null
+    );
+  },
 
-async createBlog(blog: Blog): Promise<Blog>{
-     await blogsCollection.insertOne(blog)
-      return blog
-},
+  async createBlog(blog: Blog): Promise<Blog> {
+    await blogsCollection.insertOne(blog);
+    return blog;
+  },
 
-async updateBlog(
-    body: {name: string; websiteUrl: string, description: string},
+  async updateBlog(
+    body: { name: string; websiteUrl: string; description: string },
     blogId: string
-    ): Promise<boolean | undefined >{
-      const {name, websiteUrl, description } = body 
-      const result = await blogsCollection.updateOne(
-        {id: blogId}, 
-        {$set: {description: description, name: name, websiteUrl: websiteUrl}}
-      )
-      return result.matchedCount === 1
-},
+  ): Promise<boolean | undefined> {
+    const { name, websiteUrl, description } = body;
+    const result = await blogsCollection.updateOne(
+      { id: blogId },
+      { $set: { description: description, name: name, websiteUrl: websiteUrl } }
+    );
+    return result.matchedCount === 1;
+  },
 
-async removeBlog  (id: string): Promise<boolean | undefined>{
- const result = await blogsCollection.deleteOne({id:id})
-  return result.deletedCount === 1
-}
-}
+  async removeBlog(id: string): Promise<boolean | undefined> {
+    const result = await blogsCollection.deleteOne({ id: id });
+    return result.deletedCount === 1;
+  },
+};
