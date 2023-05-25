@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import { usersService } from "../domine/users-service";
 
 export const authRouter = Router({});
@@ -9,5 +9,5 @@ authRouter.post("/", async (req: Request, res: Response) => {
     loginOrEmail,
     password
   );
-  res.status(201).send(newProduct);
+  res.status(201).send(checkResult);
 });

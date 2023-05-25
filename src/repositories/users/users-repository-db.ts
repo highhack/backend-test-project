@@ -15,4 +15,10 @@ export const usersRepository = {
     const result = await usersCollection.insertOne(user);
     return user;
   },
+  async findByLoginOrEmail(loginOrEmail: string): Promise<UserData | null> {
+    const user = await usersCollection.findOne({
+      $or: [{ email: loginOrEmail }, { userName: loginOrEmail }],
+    });
+    return user;
+  },
 };
